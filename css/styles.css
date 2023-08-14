@@ -17,7 +17,7 @@ header {
   height: 3.5rem;
 }
 
-.column-third {
+.header-column-third {
   flex-basis: calc(100%/3);
   display: flex;
   justify-content: center;
@@ -92,4 +92,29 @@ input {
 
 h3 {
   margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.list {
+  justify-content: space-evenly;
+}
+
+.column-third {
+  flex-basis: calc(100%/3);
+}
+
+.search-result {
+  margin: 0 1.5rem;
+}
+
+.search-title {
+  justify-content: center;
 }

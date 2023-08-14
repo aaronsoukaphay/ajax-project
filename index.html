@@ -17,59 +17,94 @@
   <header>
     <div class="container">
       <div class="row header">
-        <div class="column-third">
+        <div class="header-column-third">
           <a href="#" class="header-tab sub-tab">Top Animes</a>
         </div>
-        <div class="column-third">
+        <div class="header-column-third">
           <a href="#" class="header-tab" id="header-title">ZenAnime</a>
         </div>
-        <div class="column-third">
+        <div class="header-column-third">
           <a href="#" class="header-tab sub-tab">Watchlist</a>
         </div>
       </div>
     </div>
   </header>
-  <main>
+  <main class="container">
     <div data-view="home" class="hidden">
-      <div class="container">
-        <div class="row">
-          <div class="column-full">
-            <img class="carousel"
-              src="https://c4.wallpaperflare.com/wallpaper/838/806/561/satoru-gojo-one-piece-hd-wallpaper-preview.jpg"
-              alt="one-piece-banner">
-          </div>
+      <div class="row">
+        <div class="column-full">
+          <img class="carousel"
+            src="https://c4.wallpaperflare.com/wallpaper/838/806/561/satoru-gojo-one-piece-hd-wallpaper-preview.jpg"
+            alt="one-piece-banner">
         </div>
-        <div class="row">
-          <div class="column-full search-bar-background">
-            <div class="row search-bar-content">
-              <h1 id="main-title">ZenAnime</h1>
-            </div>
-            <div class="row search-bar-content">
-              <form>
-                <input style="width: 200px" type="search" id="query" name="q" placeholder="Search...">
-                <button class="search-button">Search</button>
-              </form>
-            </div>
+      </div>
+      <div class="row">
+        <div class="column-full search-bar-background">
+          <div class="row search-bar-content">
+            <h1 id="main-title">ZenAnime</h1>
+          </div>
+          <div class="row search-bar-content">
+            <form>
+              <input style="width: 200px" type="search" id="query" name="q" placeholder="Search...">
+              <button class="search-button">Search</button>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
     <div data-view="search-results">
-      <div class="container">
-        <div class="row">
-          <div class="column-sixth">
+      <div class="row">
+        <div class="column-sixth">
 
-          </div>
-          <div class="column-two-third page-header">
-            <h3>Search Results</h3>
-          </div>
-          <div class="column-sixth">
+        </div>
+        <div class="column-two-third page-header">
+          <h3>Search Results</h3>
+        </div>
+        <div class="column-sixth">
 
-          </div>
         </div>
       </div>
+      <ul id="search-list">
+        <li>
+          <div class="row list">
+            <div class="column-third search-result">
+              <div class="row">
+                <img src="https://i.ebayimg.com/images/g/9-kAAOSw~uxjO-kG/s-l1600.jpg" alt="bleach img">
+              </div>
+              <div class="row search-title">
+                <p>Bleach</p>
+              </div>
+            </div>
+            <div class="column-third search-result">
+              <div class="row">
+                <img src="https://i.ebayimg.com/images/g/9-kAAOSw~uxjO-kG/s-l1600.jpg" alt="bleach img">
+              </div>
+              <div class="row search-title">
+                <p>Bleach</p>
+              </div>
+            </div>
+            <div class="column-third search-result">
+              <div class="row">
+                <img src="https://i.ebayimg.com/images/g/9-kAAOSw~uxjO-kG/s-l1600.jpg" alt="bleach img">
+              </div>
+              <div class="row search-title">
+                <p>Bleach</p>
+              </div>
+            </div>
+            <div class="column-third search-result">
+              <div class="row">
+                <img src="https://i.ebayimg.com/images/g/9-kAAOSw~uxjO-kG/s-l1600.jpg" alt="bleach img">
+              </div>
+              <div class="row search-title">
+                <p>Bleach</p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
+
 
     <div data-view="details">
 
