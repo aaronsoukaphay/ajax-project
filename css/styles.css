@@ -101,20 +101,18 @@ img {
 ul {
   list-style: none;
   padding: 0;
-}
-
-.list {
-  justify-content: space-evenly;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .column-third {
-  flex-basis: calc(100%/3);
+  flex-basis: 30%;
 }
 
-.search-result {
-  margin: 0 1.5rem;
-}
-
-.search-title {
-  justify-content: center;
+.title {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  text-align: center;
+  font-size: smaller;
 }

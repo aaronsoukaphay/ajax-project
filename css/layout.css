@@ -31,4 +31,8 @@
   .column-half {
     width: 50%;
   }
+
+  .flex-grid-thirds .col {
+    width: 16.67%;
+  }
 }
