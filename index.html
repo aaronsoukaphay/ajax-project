@@ -21,7 +21,7 @@
           <a href="#" class="header-tab sub-tab">Top Animes</a>
         </div>
         <div class="column-third">
-          <a href="#" class="header-tab hidden" id="header-title">ZenAnime</a>
+          <a href="#" class="header-tab" id="header-title">ZenAnime</a>
         </div>
         <div class="column-third">
           <a href="#" class="header-tab sub-tab">Watchlist</a>
@@ -30,27 +30,57 @@
     </div>
   </header>
   <main>
-    <div class="container">
-      <div class="row">
-        <div class="column-full">
-          <img class="carousel"
-            src="https://c4.wallpaperflare.com/wallpaper/838/806/561/satoru-gojo-one-piece-hd-wallpaper-preview.jpg"
-            alt="one-piece-banner">
-        </div>
-      </div>
-      <div class="row">
-        <div class="column-full search-bar-background">
-          <div class="row search-bar-content">
-            <h1 id="main-title">ZenAnime</h1>
-          </div>
-          <div class="row search-bar-content">
-            <form>
-              <input style="width: 200px" type="search" id="query" name="q" placeholder="Search...">
-              <button class="search-button">Search</button>
-            </form>
+    <div data-view="home" class="hidden">
+      <div class="container">
+        <div class="row">
+          <div class="column-full">
+            <img class="carousel"
+              src="https://c4.wallpaperflare.com/wallpaper/838/806/561/satoru-gojo-one-piece-hd-wallpaper-preview.jpg"
+              alt="one-piece-banner">
           </div>
         </div>
+        <div class="row">
+          <div class="column-full search-bar-background">
+            <div class="row search-bar-content">
+              <h1 id="main-title">ZenAnime</h1>
+            </div>
+            <div class="row search-bar-content">
+              <form>
+                <input style="width: 200px" type="search" id="query" name="q" placeholder="Search...">
+                <button class="search-button">Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div data-view="search-results">
+      <div class="container">
+        <div class="row">
+          <div class="column-sixth">
+
+          </div>
+          <div class="column-two-third page-header">
+            <h3>Search Results</h3>
+          </div>
+          <div class="column-sixth">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-view="details">
+
+    </div>
+
+    <div data-view="watchlist">
+
+    </div>
+
+    <div data-view="top-animes">
+
     </div>
   </main>
   <script src="js/data.js"></script>

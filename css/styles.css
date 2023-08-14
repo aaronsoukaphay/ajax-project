@@ -3,6 +3,10 @@
   color: #fff;
 }
 
+body {
+  background-color: #292929;
+}
+
 /* header */
 
 header {
@@ -34,11 +38,7 @@ header {
   font-size: 0.8rem;
 }
 
-/* main */
-
-main {
-  background-color: #292929;
-}
+/* home */
 
 .carousel {
   width: 100%;
@@ -68,4 +68,28 @@ main {
 
 input {
   color: black;
+}
+
+/* search results */
+
+.column-sixth {
+  flex-basis: calc(100%/6);
+}
+
+.column-two-third {
+  flex-basis: calc(200%/3);
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #562b81;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+h3 {
+  margin: 0;
 }
