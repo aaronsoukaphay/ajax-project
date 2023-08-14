@@ -1,0 +1,71 @@
+* {
+  font-family: "Proza Libre", sans-serif;
+  color: #fff;
+}
+
+/* header */
+
+header {
+  background-color: #dc2626;
+}
+
+.header {
+  height: 3.5rem;
+}
+
+.column-third {
+  flex-basis: calc(100%/3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-tab {
+  text-decoration: none;
+  margin: 1rem 0;
+}
+
+#header-title {
+  font-family: "Trade Winds", cursive;
+  font-size: 1.25rem;
+}
+
+.sub-tab {
+  font-size: 0.8rem;
+}
+
+/* main */
+
+main {
+  background-color: #292929;
+}
+
+.carousel {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+#main-title {
+  font-family: "Trade Winds", cursive;
+  font-size: 2.5rem;
+  letter-spacing: 0.1rem;
+}
+
+.search-bar-background {
+  background-color: #562b81;
+  border-radius: 0.25rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar-content {
+  justify-content: center;
+}
+
+.search-button {
+  background-color: #dc2626;
+}
+
+input {
+  color: black;
+}
