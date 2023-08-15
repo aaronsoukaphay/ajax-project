@@ -71,6 +71,7 @@ header {
 
 .search-button {
   background-color: #dc2626;
+  cursor: pointer;
 }
 
 input {

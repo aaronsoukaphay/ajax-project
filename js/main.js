@@ -88,6 +88,9 @@ const $watchlistTab = document.querySelector('#watchlist');
 
 $headerTitle.addEventListener('click', function () {
   $form.reset();
+  while ($ul.childNodes.length > 0) {
+    $ul.removeChild($ul.childNodes[0]);
+  }
   viewSwap('home');
 });
 
