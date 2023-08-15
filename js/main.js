@@ -13,7 +13,10 @@ function searchFor(event) {
   xhr.open('GET', url);
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
-    renderEntry(xhr.response);
+    for (let i = 0; i < xhr.response.data.length; i++) {
+      const anime = renderEntry(xhr.response.data[i]);
+      $ul.appendChild(anime);
+    }
     toggleNoEntries();
   });
   xhr.send();
@@ -21,25 +24,26 @@ function searchFor(event) {
 }
 
 function renderEntry(entry) {
-  for (let i = 0; i < entry.data.length; i++) {
-    const $li = document.createElement('li');
-    $li.setAttribute('class', 'column-third');
+  const $li = document.createElement('li');
+  $li.setAttribute('class', 'column-third');
 
-    const $img = document.createElement('img');
-    $img.setAttribute('src', entry.data[i].images.webp.image_url);
-    $li.appendChild($img);
+  const $img = document.createElement('img');
+  $img.setAttribute('src', entry.images.webp.image_url);
+  $li.appendChild($img);
 
-    const $p = document.createElement('p');
-    $p.setAttribute('class', 'title');
-    if (entry.data[i].title_english !== null) {
-      $p.textContent = entry.data[i].title_english;
-    } else {
-      $p.textContent = entry.data[i].title_japanese;
-    }
-    $li.appendChild($p);
+  const $p = document.createElement('p');
+  $p.setAttribute('class', 'title');
 
-    $ul.appendChild($li);
+  if (entry.title_english !== null) {
+    $p.textContent = entry.title_english;
+    $img.setAttribute('alt', entry.title_english);
+  } else {
+    $p.textContent = entry.title_japanese;
+    $img.setAttribute('alt', entry.title_japanese);
   }
+  $li.appendChild($p);
+
+  return $li;
 }
 
 const $home = document.querySelector('.home');
