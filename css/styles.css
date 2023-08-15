@@ -123,3 +123,7 @@ li {
   text-align: center;
   font-size: smaller;
 }
+
+.no-entries {
+  text-align: center;
+}
