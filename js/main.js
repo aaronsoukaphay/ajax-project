@@ -1,5 +1,4 @@
 const $ul = document.querySelector('ul');
-
 const $searchButton = document.querySelector('.search-button');
 const $query = document.querySelector('#query');
 const jikan = 'https://api.jikan.moe/v4/anime?q=';
@@ -37,14 +36,23 @@ $searchButton.addEventListener('click', searchFor);
 
 const $home = document.querySelector('.home');
 const $searchResults = document.querySelector('.search-results');
+const $headerTitle = document.querySelector('#header-title');
 
 function viewSwap(viewName) {
   if (viewName === 'search-results') {
     $home.className = 'home hidden';
     $searchResults.className = 'search-results';
+    $headerTitle.className = 'header-tab';
   } else if (viewName === 'home') {
     $searchResults.className = 'search-results hidden';
     $home.className = 'home';
+    $headerTitle.className = 'header-tab hidden';
   }
   data.view = viewName;
 }
+
+// function toggleHomeBtn(viewName) {
+//   if (viewName === 'not-home') {
+//     $headerBtn.className = 'header-tab';
+//   }
+// }
