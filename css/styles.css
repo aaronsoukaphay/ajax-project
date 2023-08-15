@@ -1,0 +1,121 @@
+* {
+  font-family: "Proza Libre", sans-serif;
+  color: #fff;
+}
+
+body {
+  background-color: #292929;
+}
+
+/* header */
+
+header {
+  background-color: #dc2626;
+}
+
+.header {
+  height: 3.5rem;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-tab {
+  text-decoration: none;
+  margin: 1rem 0;
+}
+
+#header-title {
+  font-family: "Trade Winds", cursive;
+  font-size: 1.25rem;
+}
+
+.sub-tab {
+  font-size: 0.8rem;
+}
+
+/* home */
+
+.carousel {
+  width: 100%;
+}
+
+#main-title {
+  font-family: "Trade Winds", cursive;
+  font-size: 2.5rem;
+  letter-spacing: 0.1rem;
+}
+
+.search-bar-background {
+  background-color: #562b81;
+  border-radius: 0.25rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar-content {
+  justify-content: center;
+}
+
+.search-button {
+  background-color: #dc2626;
+  cursor: pointer;
+}
+
+input {
+  color: black;
+}
+
+/* search results */
+
+.column-sixth {
+  flex-basis: calc(100%/6);
+}
+
+.column-two-third {
+  flex-basis: calc(200%/3);
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #562b81;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+h3 {
+  margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+li {
+  margin: 0.35rem;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  text-align: center;
+  font-size: smaller;
+}
+
+.no-entries {
+  text-align: center;
+}
