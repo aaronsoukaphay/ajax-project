@@ -1,8 +1,9 @@
 /* exported data */
 let data = {
   view: 'home',
-  entries: [],
-  editing: null,
+  searchResults: [],
+  watchlist: [],
+  selected: null,
   nextEntryId: 1
 };
 
