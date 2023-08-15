@@ -30,10 +30,10 @@ function searchFor(event) {
 
       $ul.appendChild($li);
     }
+    toggleNoEntries();
   });
   xhr.send();
   viewSwap('search-results');
-  toggleNoEntries();
 }
 
 const $home = document.querySelector('.home');
@@ -86,11 +86,15 @@ function viewSwap(viewName) {
 const $topAnimesTab = document.querySelector('#top-animes');
 const $watchlistTab = document.querySelector('#watchlist');
 
-$headerTitle.addEventListener('click', function () {
-  $form.reset();
+function clearSearch() {
   while ($ul.childNodes.length > 0) {
     $ul.removeChild($ul.childNodes[0]);
   }
+}
+
+$headerTitle.addEventListener('click', function () {
+  $form.reset();
+  clearSearch();
   viewSwap('home');
 });
 
@@ -103,11 +107,9 @@ $watchlistTab.addEventListener('click', function () {
 });
 
 const $noEntries = document.querySelector('.no-entries');
-const $liList = document.getElementsByClassName('column-third');
-// console.log($liList);
 
 function toggleNoEntries() {
-  if ($liList.length >= 1) {
+  if ($ul.childNodes.length > 0) {
     $noEntries.className = 'no-entries hidden';
   } else {
     $noEntries.className = 'no-entries';
