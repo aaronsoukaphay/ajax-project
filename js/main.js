@@ -2,6 +2,7 @@ const $ul = document.querySelector('ul');
 const $searchButton = document.querySelector('.search-button');
 const $query = document.querySelector('#query');
 const jikan = 'https://api.jikan.moe/v4/anime?q=';
+const $form = document.querySelector('.form');
 
 function searchFor(event) {
   event.preventDefault();
@@ -51,8 +52,7 @@ function viewSwap(viewName) {
   data.view = viewName;
 }
 
-// function toggleHomeBtn(viewName) {
-//   if (viewName === 'not-home') {
-//     $headerBtn.className = 'header-tab';
-//   }
-// }
+$headerTitle.addEventListener('click', () => {
+  $form.reset();
+  viewSwap('home');
+});
