@@ -2,7 +2,7 @@ const $ul = document.querySelector('ul');
 const $searchButton = document.querySelector('.search-button');
 const $query = document.querySelector('#query');
 const jikan = 'https://api.jikan.moe/v4/anime?q=';
-const $form = document.querySelector('.form');
+// const $form = document.querySelector('.form');
 
 function searchFor(event) {
   event.preventDefault();
@@ -52,7 +52,25 @@ function viewSwap(viewName) {
   data.view = viewName;
 }
 
-$headerTitle.addEventListener('click', () => {
-  $form.reset();
-  viewSwap('home');
-});
+let counter = 0;
+const $imgList = document.querySelectorAll('.carousel');
+// console.log($imgList);
+
+const bannerID = setInterval(nextImg, 4000);
+
+function nextImg() {
+  if (counter < 5) {
+    // console.log('running');
+    for (let i = 0; i < $imgList.length; i++) {
+      if (i === counter) {
+        $imgList[i].className = 'carousel';
+      } else {
+        $imgList[i].className = 'carousel hidden';
+      }
+    }
+    counter++;
+  } else {
+    counter = 0;
+    clearInterval(bannerID);
+  }
+}
