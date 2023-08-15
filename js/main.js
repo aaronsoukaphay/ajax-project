@@ -13,6 +13,7 @@ function searchFor(event) {
   xhr.open('GET', url);
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
+    // console.log(xhr.response);
     for (let i = 0; i < xhr.response.data.length; i++) {
       const $li = document.createElement('li');
       $li.setAttribute('class', 'column-third');
@@ -23,7 +24,11 @@ function searchFor(event) {
 
       const $p = document.createElement('p');
       $p.setAttribute('class', 'title');
-      $p.textContent = xhr.response.data[i].title_english;
+      if (xhr.response.data[i].title_english !== null) {
+        $p.textContent = xhr.response.data[i].title_english;
+      } else {
+        $p.textContent = xhr.response.data[i].title_japanese;
+      }
       $li.appendChild($p);
 
       $ul.appendChild($li);
