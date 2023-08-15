@@ -18,6 +18,10 @@
   width: 100%;
 }
 
+.column-third {
+  width: 30%;
+}
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 900px;
@@ -32,7 +36,7 @@
     width: 50%;
   }
 
-  .flex-grid-thirds .col {
+  .column-third {
     width: 16.67%;
   }
 }
