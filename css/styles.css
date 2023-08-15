@@ -42,11 +42,10 @@ header {
 
 .carousel {
   width: 100%;
-  margin: 1.5rem 0;
 }
 
 .carousel-container {
-  min-height: 280px;
+  height: 350px;
   display: flex;
   justify-content: center;
   align-items: center;

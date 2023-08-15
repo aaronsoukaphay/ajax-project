@@ -13,8 +13,6 @@ function searchFor(event) {
   xhr.open('GET', url);
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
-    // console.log(xhr.status);
-    // console.log(xhr.response);
     for (let i = 0; i < xhr.response.data.length; i++) {
       const $li = document.createElement('li');
       $li.setAttribute('class', 'column-third');
@@ -119,12 +117,10 @@ function toggleNoEntries() {
 let counter = 0;
 const $imgList = document.querySelectorAll('.carousel');
 
-const bannerID = setInterval(nextImg, 4000);
+const bannerID = setInterval(nextImg, 3500);
 
 function nextImg() {
-  clearInterval(bannerID);
   if (counter < 5) {
-    // console.log('running');
     for (let i = 0; i < $imgList.length; i++) {
       if (i === counter) {
         $imgList[i].className = 'carousel';
@@ -135,5 +131,6 @@ function nextImg() {
     counter++;
   } else {
     counter = 0;
+    clearInterval(bannerID);
   }
 }
