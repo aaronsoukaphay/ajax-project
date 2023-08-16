@@ -19,7 +19,7 @@
       <div class="row header">
         <div class="column-full tabs">
           <a href="#" class="header-tab sub-tab" id="top-animes">Top Animes</a>
-          <a href="#" class="header-tab hidden" id="header-title">ZenAnime</a>
+          <a href="#" class="header-tab" id="header-title">ZenAnime</a>
           <a href="#" class="header-tab sub-tab" id="watchlist">Watchlist</a>
         </div>
       </div>
@@ -59,6 +59,8 @@
           </div>
         </div>
       </div>
+      <h3 class="new-releases">NEW RELEASES</h3>
+      <ul id="ul-top-upcoming"></ul>
     </div>
 
     <div data-view="search-results" class="search-results hidden">
@@ -73,44 +75,51 @@
 
         </div>
       </div>
-      <ul></ul>
+      <ul id="ul-search"></ul>
       <p class="no-entries hidden">No results found. Please try a different title.</p>
     </div>
 
     <div data-view="details" class="details hidden">
-      <div class="column-sixth">
+      <div class="row">
+        <div class="column-sixth">
 
-      </div>
-      <div class="column-two-third page-header">
-        <h3>Details</h3>
-      </div>
-      <div class="column-sixth">
+        </div>
+        <div class="column-two-third page-header">
+          <h3>Details</h3>
+        </div>
+        <div class="column-sixth">
 
+        </div>
       </div>
     </div>
 
     <div data-view="watchlist" class="watchlist hidden">
-      <div class="column-sixth">
+      <div class="row">
+        <div class="column-sixth">
 
-      </div>
-      <div class="column-two-third page-header">
-        <h3>Watchlist</h3>
-      </div>
-      <div class="column-sixth">
+        </div>
+        <div class="column-two-third page-header">
+          <h3>Watchlist</h3>
+        </div>
+        <div class="column-sixth">
 
+        </div>
       </div>
     </div>
 
     <div data-view="top-animes" class="top-animes hidden">
-      <div class="column-sixth">
+      <div class="row">
+        <div class="column-sixth">
 
-      </div>
-      <div class="column-two-third page-header">
-        <h3>Most Popular</h3>
-      </div>
-      <div class="column-sixth">
+        </div>
+        <div class="column-two-third page-header">
+          <h3>Most Popular</h3>
+        </div>
+        <div class="column-sixth">
 
+        </div>
       </div>
+      <ul id="ul-top-anime"></ul>
     </div>
   </main>
   <script src="js/data.js"></script>

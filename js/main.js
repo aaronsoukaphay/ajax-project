@@ -1,26 +1,66 @@
-const $ul = document.querySelector('ul');
+const $ulSearch = document.querySelector('#ul-search');
+const $ulTopAnime = document.querySelector('#ul-top-anime');
+const $ulTopUpcoming = document.querySelector('#ul-top-upcoming');
+
 const $searchButton = document.querySelector('.search-button');
 const $query = document.querySelector('#query');
-const jikan = 'https://api.jikan.moe/v4/anime?q=';
+const jikanSearch = 'https://api.jikan.moe/v4/anime?q=';
+const jikanTopAnime = 'https://api.jikan.moe/v4/top/anime?filter=airing';
+const jikanTopUpcoming = 'https://api.jikan.moe/v4/top/anime?filter=upcoming';
 const $form = document.querySelector('.form');
+
+const $topAnimesTab = document.querySelector('#top-animes');
+const $headerTitle = document.querySelector('#header-title');
+const $watchlistTab = document.querySelector('#watchlist');
 
 $searchButton.addEventListener('click', searchFor);
 
 function searchFor(event) {
   event.preventDefault();
-  const url = jikan + $query.value;
+  const url = jikanSearch + $query.value;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
     for (let i = 0; i < xhr.response.data.length; i++) {
       const anime = renderEntry(xhr.response.data[i]);
-      $ul.appendChild(anime);
+      $ulSearch.appendChild(anime);
     }
     toggleNoEntries();
   });
   xhr.send();
+  clearSearch();
   viewSwap('search-results');
+}
+
+function topAnimes(event) {
+  const url = jikanTopAnime;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', () => {
+    for (let i = 0; i < xhr.response.data.length; i++) {
+      const anime = renderEntry(xhr.response.data[i]);
+      $ulTopAnime.appendChild(anime);
+    }
+    toggleNoEntries();
+  });
+  xhr.send();
+}
+
+function topUpcoming(event) {
+  const url = jikanTopUpcoming;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', () => {
+    for (let i = 0; i < xhr.response.data.length; i++) {
+      const anime = renderEntry(xhr.response.data[i]);
+      $ulTopUpcoming.appendChild(anime);
+    }
+    toggleNoEntries();
+  });
+  xhr.send();
 }
 
 function renderEntry(entry) {
@@ -46,9 +86,25 @@ function renderEntry(entry) {
   return $li;
 }
 
+document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
+
+function handleDOMContentLoaded(event) {
+  if (data.view === 'home') {
+    topUpcoming();
+    window.addEventListener('load', topAnimes);
+  } else if (data.view === 'top-animes') {
+    topAnimes();
+    window.addEventListener('load', topUpcoming);
+  } else if (data.view === 'search-results') {
+    window.addEventListener('load', topAnimes);
+    window.addEventListener('load', topUpcoming);
+  }
+  toggleNoEntries();
+  viewSwap(data.view);
+}
+
 const $home = document.querySelector('.home');
 const $searchResults = document.querySelector('.search-results');
-const $headerTitle = document.querySelector('#header-title');
 const $details = document.querySelector('.details');
 const $watchlist = document.querySelector('.watchlist');
 const $topAnimes = document.querySelector('.top-animes');
@@ -57,14 +113,12 @@ function viewSwap(viewName) {
   if (viewName === 'search-results') {
     $home.className = 'home hidden';
     $searchResults.className = 'search-results';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist hidden';
     $details.className = 'details hidden';
     $topAnimes.className = 'top-animes hidden';
   } else if (viewName === 'home') {
     $searchResults.className = 'search-results hidden';
     $home.className = 'home';
-    $headerTitle.className = 'header-tab hidden';
     $watchlist.className = 'watchlist hidden';
     $details.className = 'details hidden';
     $topAnimes.className = 'top-animes hidden';
@@ -72,54 +126,47 @@ function viewSwap(viewName) {
     $details.className = 'details';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist hidden';
     $topAnimes.className = 'top-animes hidden';
   } else if (viewName === 'watchlist') {
     $details.className = 'details hidden';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist';
     $topAnimes.className = 'top-animes hidden';
   } else if (viewName === 'top-animes') {
     $details.className = 'details hidden';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist hidden';
     $topAnimes.className = 'top-animes';
   }
   data.view = viewName;
 }
 
-const $topAnimesTab = document.querySelector('#top-animes');
-const $watchlistTab = document.querySelector('#watchlist');
-
-function clearSearch() {
-  while ($ul.childNodes.length > 0) {
-    $ul.removeChild($ul.childNodes[0]);
-  }
-}
+$topAnimesTab.addEventListener('click', function () {
+  viewSwap('top-animes');
+});
 
 $headerTitle.addEventListener('click', function () {
   $form.reset();
-  clearSearch();
   viewSwap('home');
-});
-
-$topAnimesTab.addEventListener('click', function () {
-  viewSwap('top-animes');
 });
 
 $watchlistTab.addEventListener('click', function () {
   viewSwap('watchlist');
 });
 
+function clearSearch() {
+  while ($ulSearch.childNodes.length > 0) {
+    $ulSearch.removeChild($ulSearch.childNodes[0]);
+  }
+}
+
 const $noEntries = document.querySelector('.no-entries');
 
 function toggleNoEntries() {
-  if ($ul.childNodes.length > 0) {
+  if ($ulSearch.childNodes.length > 0) {
     $noEntries.className = 'no-entries hidden';
   } else {
     $noEntries.className = 'no-entries';
