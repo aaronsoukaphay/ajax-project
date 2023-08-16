@@ -8,9 +8,11 @@ const jikanTopAnime = 'https://api.jikan.moe/v4/top/anime?filter=airing';
 const jikanTopUpcoming = 'https://api.jikan.moe/v4/top/anime?filter=upcoming';
 const $form = document.querySelector('.form');
 const $topAnimesTab = document.querySelector('#top-animes');
+const $headerTitle = document.querySelector('#header-title');
 
 $searchButton.addEventListener('click', searchFor);
 $topAnimesTab.addEventListener('click', topAnimes);
+$headerTitle.addEventListener('click', topUpcoming);
 
 function searchFor(event) {
   event.preventDefault();
@@ -58,6 +60,9 @@ function topUpcoming(event) {
     toggleNoEntries();
   });
   xhr.send();
+  $form.reset();
+  clearSearch();
+  viewSwap('home');
 }
 
 function renderEntry(entry) {
@@ -85,7 +90,6 @@ function renderEntry(entry) {
 
 const $home = document.querySelector('.home');
 const $searchResults = document.querySelector('.search-results');
-const $headerTitle = document.querySelector('#header-title');
 const $details = document.querySelector('.details');
 const $watchlist = document.querySelector('.watchlist');
 const $topAnimes = document.querySelector('.top-animes');
@@ -132,12 +136,6 @@ function clearSearch() {
     $ulSearch.removeChild($ulSearch.childNodes[0]);
   }
 }
-
-$headerTitle.addEventListener('click', function () {
-  $form.reset();
-  clearSearch();
-  viewSwap('home');
-});
 
 $watchlistTab.addEventListener('click', function () {
   viewSwap('watchlist');
