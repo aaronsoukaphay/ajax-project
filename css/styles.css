@@ -69,6 +69,10 @@ input {
   color: black;
 }
 
+.new-releases {
+  text-align: center;
+}
+
 /* search results */
 
 .column-sixth {

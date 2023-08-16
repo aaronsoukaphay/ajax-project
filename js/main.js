@@ -1,26 +1,70 @@
-const $ul = document.querySelector('ul');
+// const $ul = document.querySelectorAll('ul');
+// console.log($ul);
+const $ulSearch = document.querySelector('#ul-search');
+const $ulTopAnime = document.querySelector('#ul-top-anime');
+const $ulTopUpcoming = document.querySelector('#ul-top-upcoming');
 const $searchButton = document.querySelector('.search-button');
 const $query = document.querySelector('#query');
-const jikan = 'https://api.jikan.moe/v4/anime?q=';
+const jikanSearch = 'https://api.jikan.moe/v4/anime?q=';
+const jikanTopAnime = 'https://api.jikan.moe/v4/top/anime?filter=airing';
+const jikanTopUpcoming = 'https://api.jikan.moe/v4/top/anime?filter=upcoming';
 const $form = document.querySelector('.form');
+const $topAnimesTab = document.querySelector('#top-animes');
 
 $searchButton.addEventListener('click', searchFor);
+$topAnimesTab.addEventListener('click', topAnimes);
 
 function searchFor(event) {
   event.preventDefault();
-  const url = jikan + $query.value;
+  const url = jikanSearch + $query.value;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
     for (let i = 0; i < xhr.response.data.length; i++) {
       const anime = renderEntry(xhr.response.data[i]);
-      $ul.appendChild(anime);
+      $ulSearch.appendChild(anime);
     }
     toggleNoEntries();
   });
   xhr.send();
   viewSwap('search-results');
+}
+
+function topAnimes(event) {
+  event.preventDefault();
+  const url = jikanTopAnime;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', () => {
+    for (let i = 0; i < xhr.response.data.length; i++) {
+      const anime = renderEntry(xhr.response.data[i]);
+      $ulTopAnime.appendChild(anime);
+    }
+    toggleNoEntries();
+  });
+  xhr.send();
+  viewSwap('top-animes');
+}
+
+function topUpcoming(event) {
+  const url = jikanTopUpcoming;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', () => {
+    for (let i = 0; i < xhr.response.data.length; i++) {
+      const anime = renderEntry(xhr.response.data[i]);
+      $ulTopUpcoming.appendChild(anime);
+    }
+    toggleNoEntries();
+  });
+  xhr.send();
+}
+
+if (data.view === 'home') {
+  topUpcoming();
 }
 
 function renderEntry(entry) {
@@ -93,23 +137,18 @@ function viewSwap(viewName) {
   data.view = viewName;
 }
 
-const $topAnimesTab = document.querySelector('#top-animes');
 const $watchlistTab = document.querySelector('#watchlist');
 
-function clearSearch() {
-  while ($ul.childNodes.length > 0) {
-    $ul.removeChild($ul.childNodes[0]);
-  }
-}
+// function clearSearch() {
+//   while ($ul.length > 0) {
+//     $ul.removeChild($ul.childNodes[0]);
+//   }
+// }
 
 $headerTitle.addEventListener('click', function () {
   $form.reset();
-  clearSearch();
+  // clearSearch();
   viewSwap('home');
-});
-
-$topAnimesTab.addEventListener('click', function () {
-  viewSwap('top-animes');
 });
 
 $watchlistTab.addEventListener('click', function () {
@@ -119,7 +158,7 @@ $watchlistTab.addEventListener('click', function () {
 const $noEntries = document.querySelector('.no-entries');
 
 function toggleNoEntries() {
-  if ($ul.childNodes.length > 0) {
+  if ($ulSearch.childNodes.length > 0) {
     $noEntries.className = 'no-entries hidden';
   } else {
     $noEntries.className = 'no-entries';
