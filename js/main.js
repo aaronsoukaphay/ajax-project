@@ -1,5 +1,3 @@
-// const $ul = document.querySelectorAll('ul');
-// console.log($ul);
 const $ulSearch = document.querySelector('#ul-search');
 const $ulTopAnime = document.querySelector('#ul-top-anime');
 const $ulTopUpcoming = document.querySelector('#ul-top-upcoming');
@@ -32,7 +30,6 @@ function searchFor(event) {
 }
 
 function topAnimes(event) {
-  event.preventDefault();
   const url = jikanTopAnime;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
@@ -61,10 +58,6 @@ function topUpcoming(event) {
     toggleNoEntries();
   });
   xhr.send();
-}
-
-if (data.view === 'home') {
-  topUpcoming();
 }
 
 function renderEntry(entry) {
@@ -179,4 +172,16 @@ function nextImg() {
     counter = 0;
     clearInterval(bannerID);
   }
+}
+
+document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
+
+function handleDOMContentLoaded(event) {
+  if (data.view === 'top-animes') {
+    topAnimes();
+  } else if (data.view === 'home') {
+    topUpcoming();
+  }
+  toggleNoEntries();
+  viewSwap(data.view);
 }
