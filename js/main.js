@@ -1,18 +1,19 @@
 const $ulSearch = document.querySelector('#ul-search');
 const $ulTopAnime = document.querySelector('#ul-top-anime');
 const $ulTopUpcoming = document.querySelector('#ul-top-upcoming');
+
 const $searchButton = document.querySelector('.search-button');
 const $query = document.querySelector('#query');
 const jikanSearch = 'https://api.jikan.moe/v4/anime?q=';
 const jikanTopAnime = 'https://api.jikan.moe/v4/top/anime?filter=airing';
 const jikanTopUpcoming = 'https://api.jikan.moe/v4/top/anime?filter=upcoming';
 const $form = document.querySelector('.form');
+
 const $topAnimesTab = document.querySelector('#top-animes');
 const $headerTitle = document.querySelector('#header-title');
+const $watchlistTab = document.querySelector('#watchlist');
 
 $searchButton.addEventListener('click', searchFor);
-$topAnimesTab.addEventListener('click', topAnimes);
-$headerTitle.addEventListener('click', topUpcoming);
 
 function searchFor(event) {
   event.preventDefault();
@@ -28,6 +29,7 @@ function searchFor(event) {
     toggleNoEntries();
   });
   xhr.send();
+  clearSearch();
   viewSwap('search-results');
 }
 
@@ -44,7 +46,6 @@ function topAnimes(event) {
     toggleNoEntries();
   });
   xhr.send();
-  viewSwap('top-animes');
 }
 
 function topUpcoming(event) {
@@ -60,9 +61,6 @@ function topUpcoming(event) {
     toggleNoEntries();
   });
   xhr.send();
-  $form.reset();
-  clearSearch();
-  viewSwap('home');
 }
 
 function renderEntry(entry) {
@@ -86,6 +84,23 @@ function renderEntry(entry) {
   $li.appendChild($p);
 
   return $li;
+}
+
+document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
+
+function handleDOMContentLoaded(event) {
+  if (data.view === 'home') {
+    topUpcoming();
+    window.addEventListener('load', topAnimes);
+  } else if (data.view === 'top-animes') {
+    topAnimes();
+    window.addEventListener('load', topUpcoming);
+  } else if (data.view === 'search-results') {
+    window.addEventListener('load', topAnimes);
+    window.addEventListener('load', topUpcoming);
+  }
+  toggleNoEntries();
+  viewSwap(data.view);
 }
 
 const $home = document.querySelector('.home');
@@ -129,17 +144,24 @@ function viewSwap(viewName) {
   data.view = viewName;
 }
 
-const $watchlistTab = document.querySelector('#watchlist');
+$topAnimesTab.addEventListener('click', function () {
+  viewSwap('top-animes');
+});
+
+$headerTitle.addEventListener('click', function () {
+  $form.reset();
+  viewSwap('home');
+});
+
+$watchlistTab.addEventListener('click', function () {
+  viewSwap('watchlist');
+});
 
 function clearSearch() {
   while ($ulSearch.childNodes.length > 0) {
     $ulSearch.removeChild($ulSearch.childNodes[0]);
   }
 }
-
-$watchlistTab.addEventListener('click', function () {
-  viewSwap('watchlist');
-});
 
 const $noEntries = document.querySelector('.no-entries');
 
@@ -170,16 +192,4 @@ function nextImg() {
     counter = 0;
     clearInterval(bannerID);
   }
-}
-
-document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
-
-function handleDOMContentLoaded(event) {
-  if (data.view === 'top-animes') {
-    topAnimes();
-  } else if (data.view === 'home') {
-    topUpcoming();
-  }
-  toggleNoEntries();
-  viewSwap(data.view);
 }
