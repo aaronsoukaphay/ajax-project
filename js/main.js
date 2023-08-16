@@ -101,14 +101,12 @@ function viewSwap(viewName) {
   if (viewName === 'search-results') {
     $home.className = 'home hidden';
     $searchResults.className = 'search-results';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist hidden';
     $details.className = 'details hidden';
     $topAnimes.className = 'top-animes hidden';
   } else if (viewName === 'home') {
     $searchResults.className = 'search-results hidden';
     $home.className = 'home';
-    $headerTitle.className = 'header-tab hidden';
     $watchlist.className = 'watchlist hidden';
     $details.className = 'details hidden';
     $topAnimes.className = 'top-animes hidden';
@@ -116,21 +114,18 @@ function viewSwap(viewName) {
     $details.className = 'details';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist hidden';
     $topAnimes.className = 'top-animes hidden';
   } else if (viewName === 'watchlist') {
     $details.className = 'details hidden';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist';
     $topAnimes.className = 'top-animes hidden';
   } else if (viewName === 'top-animes') {
     $details.className = 'details hidden';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
-    $headerTitle.className = 'header-tab';
     $watchlist.className = 'watchlist hidden';
     $topAnimes.className = 'top-animes';
   }
@@ -139,15 +134,15 @@ function viewSwap(viewName) {
 
 const $watchlistTab = document.querySelector('#watchlist');
 
-// function clearSearch() {
-//   while ($ul.length > 0) {
-//     $ul.removeChild($ul.childNodes[0]);
-//   }
-// }
+function clearSearch() {
+  while ($ulSearch.childNodes.length > 0) {
+    $ulSearch.removeChild($ulSearch.childNodes[0]);
+  }
+}
 
 $headerTitle.addEventListener('click', function () {
   $form.reset();
-  // clearSearch();
+  clearSearch();
   viewSwap('home');
 });
 
