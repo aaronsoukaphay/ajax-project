@@ -43,7 +43,6 @@ function topAnimes(event) {
       const anime = renderEntry(xhr.response.data[i]);
       $ulTopAnime.appendChild(anime);
     }
-    toggleNoEntries();
   });
   xhr.send();
 }
@@ -58,7 +57,6 @@ function topUpcoming(event) {
       const anime = renderEntry(xhr.response.data[i]);
       $ulTopUpcoming.appendChild(anime);
     }
-    toggleNoEntries();
   });
   xhr.send();
 }

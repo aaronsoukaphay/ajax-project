@@ -123,3 +123,56 @@ li {
 .no-entries {
   text-align: center;
 }
+
+/* details */
+
+.poster-container {
+  margin-top: 1.5rem;
+}
+
+.details-poster {
+  display: flex;
+  justify-content: center;
+}
+
+.description-box {
+  background-color: #562b81;
+  border-radius: 0.25rem;
+  margin-top: 1.5rem;
+}
+
+.description-title-box {
+  background-color: #dc2626;
+  border-radius: 0.25rem;
+  text-align: center;
+  margin: 0 1.5rem;
+}
+
+.description-title {
+  padding: 0.5rem;
+}
+
+.description-body {
+  padding: 0 0.75rem;
+}
+
+.add-watchlist-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#add-watchlist-button {
+  text-decoration: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.trailer-title {
+  text-align: center;
+}
+
+.trailer-video {
+  display: flex;
+  justify-content: center;
+}
