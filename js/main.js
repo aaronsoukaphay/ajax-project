@@ -21,10 +21,22 @@ function searchFor(event) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.responseType = 'json';
+  data.searchResults = [];
   xhr.addEventListener('load', () => {
     for (let i = 0; i < xhr.response.data.length; i++) {
-      const anime = renderEntry(xhr.response.data[i]);
+      const animeInfo = {
+        animeId: xhr.response.data[i].mal_id,
+        imgURL: xhr.response.data[i].images.webp.image_url,
+        titleEng: xhr.response.data[i].title_english,
+        titleJap: xhr.response.data[i].title_japanese,
+        synopsis: xhr.response.data[i].synopsis,
+        year: xhr.response.data[i].year,
+        score: xhr.response.data[i].score,
+        genres: xhr.response.data[i].genres[0].name
+      };
+      const anime = renderEntry(animeInfo);
       $ulSearch.appendChild(anime);
+      data.searchResults.push(animeInfo);
     }
     toggleNoEntries();
   });
@@ -38,10 +50,22 @@ function topAnimes(event) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.responseType = 'json';
+  data.topAnimes = [];
   xhr.addEventListener('load', () => {
     for (let i = 0; i < xhr.response.data.length; i++) {
-      const anime = renderEntry(xhr.response.data[i]);
+      const animeInfo = {
+        animeId: xhr.response.data[i].mal_id,
+        imgURL: xhr.response.data[i].images.webp.image_url,
+        titleEng: xhr.response.data[i].title_english,
+        titleJap: xhr.response.data[i].title_japanese,
+        synopsis: xhr.response.data[i].synopsis,
+        year: xhr.response.data[i].year,
+        score: xhr.response.data[i].score,
+        genres: xhr.response.data[i].genres[0].name
+      };
+      const anime = renderEntry(animeInfo);
       $ulTopAnime.appendChild(anime);
+      data.topAnimes.push(animeInfo);
     }
   });
   xhr.send();
@@ -52,13 +76,34 @@ function topUpcoming(event) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.responseType = 'json';
+  data.topUpcoming = [];
   xhr.addEventListener('load', () => {
     for (let i = 0; i < xhr.response.data.length; i++) {
-      const anime = renderEntry(xhr.response.data[i]);
+      const animeInfo = {
+        animeId: xhr.response.data[i].mal_id,
+        imgURL: xhr.response.data[i].images.webp.image_url,
+        titleEng: xhr.response.data[i].title_english,
+        titleJap: xhr.response.data[i].title_japanese,
+        synopsis: xhr.response.data[i].synopsis,
+        year: xhr.response.data[i].year,
+        score: xhr.response.data[i].score,
+        genres: xhr.response.data[i].genres[0].name
+      };
+      const anime = renderEntry(animeInfo);
       $ulTopUpcoming.appendChild(anime);
+      data.topUpcoming.push(animeInfo);
     }
   });
   xhr.send();
+}
+
+$ulTopAnime.addEventListener('click', topAnimeDetails);
+
+function topAnimeDetails(event) {
+  // if (event.target) {
+
+  // }
+  viewSwap('details');
 }
 
 function renderEntry(entry) {
@@ -66,18 +111,18 @@ function renderEntry(entry) {
   $li.setAttribute('class', 'column-third');
 
   const $img = document.createElement('img');
-  $img.setAttribute('src', entry.images.webp.image_url);
+  $img.setAttribute('src', entry.imgURL);
   $li.appendChild($img);
 
   const $p = document.createElement('p');
   $p.setAttribute('class', 'title');
 
-  if (entry.title_english !== null) {
-    $p.textContent = entry.title_english;
-    $img.setAttribute('alt', entry.title_english);
+  if (entry.titleEng !== null) {
+    $p.textContent = entry.titleEng;
+    $img.setAttribute('alt', entry.titleEng);
   } else {
-    $p.textContent = entry.title_japanese;
-    $img.setAttribute('alt', entry.title_japanese);
+    $p.textContent = entry.titleJap;
+    $img.setAttribute('alt', entry.titleJap);
   }
   $li.appendChild($p);
 
