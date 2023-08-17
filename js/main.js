@@ -31,8 +31,8 @@ function searchFor(event) {
         titleJap: xhr.response.data[i].title_japanese,
         synopsis: xhr.response.data[i].synopsis,
         year: xhr.response.data[i].year,
-        score: xhr.response.data[i].score,
-        genres: xhr.response.data[i].genres[0].name
+        score: xhr.response.data[i].score
+        // genres: xhr.response.data[i].genres[0].name
       };
       const anime = renderEntry(animeInfo);
       $ulSearch.appendChild(anime);
@@ -60,8 +60,8 @@ function topAnimes(event) {
         titleJap: xhr.response.data[i].title_japanese,
         synopsis: xhr.response.data[i].synopsis,
         year: xhr.response.data[i].year,
-        score: xhr.response.data[i].score,
-        genres: xhr.response.data[i].genres[0].name
+        score: xhr.response.data[i].score
+        // genres: xhr.response.data[i].genres[0].name
       };
       const anime = renderEntry(animeInfo);
       $ulTopAnime.appendChild(anime);
@@ -86,8 +86,8 @@ function topUpcoming(event) {
         titleJap: xhr.response.data[i].title_japanese,
         synopsis: xhr.response.data[i].synopsis,
         year: xhr.response.data[i].year,
-        score: xhr.response.data[i].score,
-        genres: xhr.response.data[i].genres[0].name
+        score: xhr.response.data[i].score
+        // genres: xhr.response.data[i].genres[0].name
       };
       const anime = renderEntry(animeInfo);
       $ulTopUpcoming.appendChild(anime);
@@ -100,9 +100,12 @@ function topUpcoming(event) {
 $ulTopAnime.addEventListener('click', topAnimeDetails);
 
 function topAnimeDetails(event) {
-  // if (event.target) {
+  for (let i = 0; i < data.topAnimes.length; i++) {
+    if (Number(event.target.getAttribute('clicked-anime-id')) === data.topAnimes[i].animeId) {
+      // console.log(data.topAnimes[i].titleEng);
 
-  // }
+    }
+  }
   viewSwap('details');
 }
 
@@ -110,9 +113,14 @@ function renderEntry(entry) {
   const $li = document.createElement('li');
   $li.setAttribute('class', 'column-third');
 
+  const $a = document.createElement('a');
+  $a.setAttribute('href', '#');
+  $li.appendChild($a);
+
   const $img = document.createElement('img');
   $img.setAttribute('src', entry.imgURL);
-  $li.appendChild($img);
+  $img.setAttribute('clicked-anime-id', entry.animeId);
+  $a.appendChild($img);
 
   const $p = document.createElement('p');
   $p.setAttribute('class', 'title');
@@ -128,6 +136,29 @@ function renderEntry(entry) {
 
   return $li;
 }
+
+// function renderEntry(entry) {
+//   const $li = document.createElement('li');
+//   $li.setAttribute('class', 'column-third');
+
+//   const $img = document.createElement('img');
+//   $img.setAttribute('src', entry.imgURL);
+//   $li.appendChild($img);
+
+//   const $p = document.createElement('p');
+//   $p.setAttribute('class', 'title');
+
+//   if (entry.titleEng !== null) {
+//     $p.textContent = entry.titleEng;
+//     $img.setAttribute('alt', entry.titleEng);
+//   } else {
+//     $p.textContent = entry.titleJap;
+//     $img.setAttribute('alt', entry.titleJap);
+//   }
+//   $li.appendChild($p);
+
+//   return $li;
+// }
 
 document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
 
