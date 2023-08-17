@@ -147,6 +147,26 @@ function topAnimeDetails(event) {
 //   $divDescriptionBody.appendChild($pSynopsis);
 
 //   const $pYear = document.createElement('p');
+//   $pYear.textContent = 'detail.year';
+//   $divDescriptionBody.appendChild($pYear);
+
+//   const $pScore = document.createElement('p');
+//   $pScore.textContent = 'detail.score';
+//   $divDescriptionBody.appendChild($pScore);
+
+//   const $pGenre = document.createElement('p');
+//   $pGenre.textContent = 'detail.genres';
+//   $divDescriptionBody.appendChild($pGenre);
+
+//   const $divWatchlistContainer = document.createElement('div');
+//   $divWatchlistContainer.setAttribute('class', 'add-watchlist-container');
+//   $divDescriptionBox.appendChild($divWatchlistContainer);
+
+//   const $a = document.createElement('a');
+//   $a.setAttribute('id', 'add-watchlist-button');
+//   $a.setAttribute('href', '#');
+//   $a.textContent = 'Add to watchlist';
+//   $divWatchlistContainer.appendChild($a);
 
 //   // if (detail.titleEng !== null) {
 //   //   $h4.textContent = detail.titleEng;
