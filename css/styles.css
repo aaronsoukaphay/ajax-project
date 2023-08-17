@@ -128,11 +128,9 @@ li {
 
 .poster-container {
   margin-top: 1.5rem;
-}
-
-.details-poster {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .description-box {

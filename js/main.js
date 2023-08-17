@@ -60,7 +60,8 @@ function topAnimes(event) {
         titleJap: xhr.response.data[i].title_japanese,
         synopsis: xhr.response.data[i].synopsis,
         year: xhr.response.data[i].year,
-        score: xhr.response.data[i].score
+        score: xhr.response.data[i].score,
+        trailerURL: xhr.response.data[i].trailer.embed_url
         // genres: xhr.response.data[i].genres[0].name
       };
       const anime = renderEntry(animeInfo);
@@ -78,10 +79,11 @@ function topUpcoming(event) {
   xhr.responseType = 'json';
   data.topUpcoming = [];
   xhr.addEventListener('load', () => {
+    // console.log(xhr.response);
     for (let i = 0; i < xhr.response.data.length; i++) {
       const animeInfo = {
         animeId: xhr.response.data[i].mal_id,
-        imgURL: xhr.response.data[i].images.webp.image_url,
+        imgURL: xhr.response.data[i].images.webp.large_image_url,
         titleEng: xhr.response.data[i].title_english,
         titleJap: xhr.response.data[i].title_japanese,
         synopsis: xhr.response.data[i].synopsis,
@@ -105,7 +107,10 @@ function topAnimeDetails(event) {
     if (Number(event.target.getAttribute('clicked-anime-id')) === data.topAnimes[i].animeId) {
       // console.log(data.topAnimes[i]);
       const renderedDetails = renderDetails(data.topAnimes[i]);
+      const renderedTrailer = renderTrailerDetails(data.topAnimes[i]);
       $detailsView.appendChild(renderedDetails);
+      $detailsView.appendChild(renderedTrailer);
+
     }
   }
   viewSwap('details');
@@ -119,13 +124,9 @@ function renderDetails(detail) {
   $divPosterContainer.setAttribute('class', 'column-half poster-container');
   $div.appendChild($divPosterContainer);
 
-  const $divDetailsPoster = document.createElement('div');
-  $divDetailsPoster.setAttribute('class', 'details-poster');
-  $divPosterContainer.appendChild($divDetailsPoster);
-
   const $img = document.createElement('img');
   $img.setAttribute('src', detail.imgURL);
-  $divDetailsPoster.appendChild($img);
+  $divPosterContainer.appendChild($img);
 
   const $divDescriptionBox = document.createElement('div');
   $divDescriptionBox.setAttribute('class', 'column-half description-box');
@@ -181,6 +182,21 @@ function renderDetails(detail) {
   return $div;
 }
 
+function renderTrailerDetails(detail) {
+  const $div = document.createElement('div');
+  $div.setAttribute('class', 'row');
+
+  const $divTrailer = document.createElement('div');
+  $div.setAttribute('class', 'column-full trailer-video');
+  $div.appendChild($divTrailer);
+
+  const $iframe = document.createElement('iframe');
+  $iframe.setAttribute('src', detail.trailerURL);
+  $divTrailer.appendChild($iframe);
+
+  return $div;
+}
+
 function renderEntry(entry) {
   const $li = document.createElement('li');
   $li.setAttribute('class', 'column-third');
@@ -208,29 +224,6 @@ function renderEntry(entry) {
 
   return $li;
 }
-
-// function renderEntry(entry) {
-//   const $li = document.createElement('li');
-//   $li.setAttribute('class', 'column-third');
-
-//   const $img = document.createElement('img');
-//   $img.setAttribute('src', entry.imgURL);
-//   $li.appendChild($img);
-
-//   const $p = document.createElement('p');
-//   $p.setAttribute('class', 'title');
-
-//   if (entry.titleEng !== null) {
-//     $p.textContent = entry.titleEng;
-//     $img.setAttribute('alt', entry.titleEng);
-//   } else {
-//     $p.textContent = entry.titleJap;
-//     $img.setAttribute('alt', entry.titleJap);
-//   }
-//   $li.appendChild($p);
-
-//   return $li;
-// }
 
 document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
 
