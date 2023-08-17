@@ -103,11 +103,63 @@ function topAnimeDetails(event) {
   for (let i = 0; i < data.topAnimes.length; i++) {
     if (Number(event.target.getAttribute('clicked-anime-id')) === data.topAnimes[i].animeId) {
       // console.log(data.topAnimes[i].titleEng);
-
+      // generate dom
     }
   }
   viewSwap('details');
 }
+
+// function renderDetails(detail) {
+//   const $div = document.createElement('div');
+//   $div.setAttribute('class', 'row');
+
+//   const $divPosterContainer = document.createElement('div');
+//   $divPosterContainer.setAttribute('class', 'column-half poster-container');
+//   $div.appendChild($divPosterContainer);
+
+//   const $divDetailsPoster = document.createElement('div');
+//   $divDetailsPoster.setAttribute('class', 'details-poster');
+//   $divPosterContainer.appendChild($divDetailsPoster);
+
+//   const $img = document.createElement('img');
+//   $img.setAttribute('src', '');
+//   $divDetailsPoster.appendChild($img);
+
+//   const $divDescriptionBox = document.createElement('div');
+//   $divDescriptionBox.setAttribute('class', 'column-half description-box');
+//   $div.appendChild($divDescriptionBox);
+
+//   const $divDescriptionTitleBox = document.createElement('div');
+//   $divDescriptionTitleBox.setAttribute('class', 'description-title-box');
+//   $divDescriptionBox.appendChild($divDescriptionTitleBox);
+
+//   const $h4 = document.createElement('h4');
+//   $h4.setAttribute('class', 'description-title');
+//   $h4.textContent = 'detail.titleEng';
+//   $divDescriptionTitleBox.appendChild($h4);
+
+//   const $divDescriptionBody = document.createElement('div');
+//   $divDescriptionBody.setAttribute('class', 'description-body');
+//   $divDescriptionBox.appendChild($divDescriptionBody);
+
+//   const $pSynopsis = document.createElement('p');
+//   $pSynopsis.textContent = 'detail.synopsis';
+//   $divDescriptionBody.appendChild($pSynopsis);
+
+//   const $pYear = document.createElement('p');
+
+//   // if (detail.titleEng !== null) {
+//   //   $h4.textContent = detail.titleEng;
+//   //   $img.setAttribute('alt', detail.titleEng);
+//   // } else {
+//   //   $h4.textContent = detail.titleJap;
+//   //   $img.setAttribute('alt', detail.titleJap);
+//   // }
+
+//   return $div;
+// }
+
+// console.log(renderDetails());
 
 function renderEntry(entry) {
   const $li = document.createElement('li');
