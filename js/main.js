@@ -98,88 +98,88 @@ function topUpcoming(event) {
 }
 
 $ulTopAnime.addEventListener('click', topAnimeDetails);
+const $detailsView = document.querySelector('.details');
 
 function topAnimeDetails(event) {
   for (let i = 0; i < data.topAnimes.length; i++) {
     if (Number(event.target.getAttribute('clicked-anime-id')) === data.topAnimes[i].animeId) {
-      // console.log(data.topAnimes[i].titleEng);
-      // generate dom
+      // console.log(data.topAnimes[i]);
+      const renderedDetails = renderDetails(data.topAnimes[i]);
+      $detailsView.appendChild(renderedDetails);
     }
   }
   viewSwap('details');
 }
 
-// function renderDetails(detail) {
-//   const $div = document.createElement('div');
-//   $div.setAttribute('class', 'row');
+function renderDetails(detail) {
+  const $div = document.createElement('div');
+  $div.setAttribute('class', 'row');
 
-//   const $divPosterContainer = document.createElement('div');
-//   $divPosterContainer.setAttribute('class', 'column-half poster-container');
-//   $div.appendChild($divPosterContainer);
+  const $divPosterContainer = document.createElement('div');
+  $divPosterContainer.setAttribute('class', 'column-half poster-container');
+  $div.appendChild($divPosterContainer);
 
-//   const $divDetailsPoster = document.createElement('div');
-//   $divDetailsPoster.setAttribute('class', 'details-poster');
-//   $divPosterContainer.appendChild($divDetailsPoster);
+  const $divDetailsPoster = document.createElement('div');
+  $divDetailsPoster.setAttribute('class', 'details-poster');
+  $divPosterContainer.appendChild($divDetailsPoster);
 
-//   const $img = document.createElement('img');
-//   $img.setAttribute('src', '');
-//   $divDetailsPoster.appendChild($img);
+  const $img = document.createElement('img');
+  $img.setAttribute('src', detail.imgURL);
+  $divDetailsPoster.appendChild($img);
 
-//   const $divDescriptionBox = document.createElement('div');
-//   $divDescriptionBox.setAttribute('class', 'column-half description-box');
-//   $div.appendChild($divDescriptionBox);
+  const $divDescriptionBox = document.createElement('div');
+  $divDescriptionBox.setAttribute('class', 'column-half description-box');
+  $div.appendChild($divDescriptionBox);
 
-//   const $divDescriptionTitleBox = document.createElement('div');
-//   $divDescriptionTitleBox.setAttribute('class', 'description-title-box');
-//   $divDescriptionBox.appendChild($divDescriptionTitleBox);
+  const $divDescriptionTitleBox = document.createElement('div');
+  $divDescriptionTitleBox.setAttribute('class', 'description-title-box');
+  $divDescriptionBox.appendChild($divDescriptionTitleBox);
 
-//   const $h4 = document.createElement('h4');
-//   $h4.setAttribute('class', 'description-title');
-//   $h4.textContent = 'detail.titleEng';
-//   $divDescriptionTitleBox.appendChild($h4);
+  const $h4 = document.createElement('h4');
+  $h4.setAttribute('class', 'description-title');
+  $h4.textContent = detail.titleEng;
+  $divDescriptionTitleBox.appendChild($h4);
 
-//   const $divDescriptionBody = document.createElement('div');
-//   $divDescriptionBody.setAttribute('class', 'description-body');
-//   $divDescriptionBox.appendChild($divDescriptionBody);
+  const $divDescriptionBody = document.createElement('div');
+  $divDescriptionBody.setAttribute('class', 'description-body');
+  $divDescriptionBox.appendChild($divDescriptionBody);
 
-//   const $pSynopsis = document.createElement('p');
-//   $pSynopsis.textContent = 'detail.synopsis';
-//   $divDescriptionBody.appendChild($pSynopsis);
+  const $pSynopsis = document.createElement('p');
+  $pSynopsis.textContent = detail.synopsis;
+  $divDescriptionBody.appendChild($pSynopsis);
 
-//   const $pYear = document.createElement('p');
-//   $pYear.textContent = 'detail.year';
-//   $divDescriptionBody.appendChild($pYear);
+  const $pYear = document.createElement('p');
+  $pYear.textContent = `Year released: ${detail.year}`;
+  $divDescriptionBody.appendChild($pYear);
 
-//   const $pScore = document.createElement('p');
-//   $pScore.textContent = 'detail.score';
-//   $divDescriptionBody.appendChild($pScore);
+  const $pScore = document.createElement('p');
+  $pScore.textContent = `Score: ${detail.score}/10`;
+  $divDescriptionBody.appendChild($pScore);
 
-//   const $pGenre = document.createElement('p');
-//   $pGenre.textContent = 'detail.genres';
-//   $divDescriptionBody.appendChild($pGenre);
+  // const $pGenre = document.createElement('p');
+  // $pGenre.textContent = detail.genres;
+  // $divDescriptionBody.appendChild($pGenre);
 
-//   const $divWatchlistContainer = document.createElement('div');
-//   $divWatchlistContainer.setAttribute('class', 'add-watchlist-container');
-//   $divDescriptionBox.appendChild($divWatchlistContainer);
+  const $divWatchlistContainer = document.createElement('div');
+  $divWatchlistContainer.setAttribute('class', 'add-watchlist-container');
+  $divDescriptionBox.appendChild($divWatchlistContainer);
 
-//   const $a = document.createElement('a');
-//   $a.setAttribute('id', 'add-watchlist-button');
-//   $a.setAttribute('href', '#');
-//   $a.textContent = 'Add to watchlist';
-//   $divWatchlistContainer.appendChild($a);
+  const $a = document.createElement('a');
+  $a.setAttribute('id', 'add-watchlist-button');
+  $a.setAttribute('href', '#');
+  $a.textContent = 'Add to watchlist';
+  $divWatchlistContainer.appendChild($a);
 
-//   // if (detail.titleEng !== null) {
-//   //   $h4.textContent = detail.titleEng;
-//   //   $img.setAttribute('alt', detail.titleEng);
-//   // } else {
-//   //   $h4.textContent = detail.titleJap;
-//   //   $img.setAttribute('alt', detail.titleJap);
-//   // }
+  if (detail.titleEng !== null) {
+    $h4.textContent = detail.titleEng;
+    $img.setAttribute('alt', detail.titleEng);
+  } else {
+    $h4.textContent = detail.titleJap;
+    $img.setAttribute('alt', detail.titleJap);
+  }
 
-//   return $div;
-// }
-
-// console.log(renderDetails());
+  return $div;
+}
 
 function renderEntry(entry) {
   const $li = document.createElement('li');
