@@ -32,9 +32,13 @@ function searchFor(event) {
         titleJap: xhr.response.data[i].title_japanese,
         synopsis: xhr.response.data[i].synopsis,
         year: xhr.response.data[i].year,
-        score: xhr.response.data[i].score
-        // genres: xhr.response.data[i].genres[0].name
+        score: xhr.response.data[i].score,
+        trailerURL: xhr.response.data[i].trailer.embed_url,
+        genres: []
       };
+      for (let j = 0; j < xhr.response.data[i].genres.length; j++) {
+        animeInfo.genres.push(xhr.response.data[i].genres[j].name);
+      }
       const anime = renderEntry(animeInfo);
       $ulSearch.appendChild(anime);
       data.searchResults.push(animeInfo);
@@ -52,6 +56,7 @@ function topAnimes(event) {
   xhr.responseType = 'json';
   data.topAnimes = [];
   xhr.addEventListener('load', () => {
+    // console.log(xhr.response);
     for (let i = 0; i < xhr.response.data.length; i++) {
       const animeInfo = {
         animeId: xhr.response.data[i].mal_id,
@@ -61,9 +66,12 @@ function topAnimes(event) {
         synopsis: xhr.response.data[i].synopsis,
         year: xhr.response.data[i].year,
         score: xhr.response.data[i].score,
-        trailerURL: xhr.response.data[i].trailer.embed_url
-        // genres: xhr.response.data[i].genres[0].name
+        trailerURL: xhr.response.data[i].trailer.embed_url,
+        genres: []
       };
+      for (let j = 0; j < xhr.response.data[i].genres.length; j++) {
+        animeInfo.genres.push(xhr.response.data[i].genres[j].name);
+      }
       const anime = renderEntry(animeInfo);
       $ulTopAnime.appendChild(anime);
       data.topAnimes.push(animeInfo);
@@ -88,9 +96,13 @@ function topUpcoming(event) {
         titleJap: xhr.response.data[i].title_japanese,
         synopsis: xhr.response.data[i].synopsis,
         year: xhr.response.data[i].year,
-        score: xhr.response.data[i].score
-        // genres: xhr.response.data[i].genres[0].name
+        score: xhr.response.data[i].score,
+        trailerURL: xhr.response.data[i].trailer.embed_url,
+        genres: []
       };
+      for (let j = 0; j < xhr.response.data[i].genres.length; j++) {
+        animeInfo.genres.push(xhr.response.data[i].genres[j].name);
+      }
       const anime = renderEntry(animeInfo);
       $ulTopUpcoming.appendChild(anime);
       data.topUpcoming.push(animeInfo);
@@ -170,6 +182,7 @@ function renderDetails(detail) {
 
   const $img = document.createElement('img');
   $img.setAttribute('src', detail.imgURL);
+  $img.setAttribute('alt', detail.titleEng);
   $divPosterContainer.appendChild($img);
 
   const $divDescriptionBox = document.createElement('div');
@@ -194,16 +207,16 @@ function renderDetails(detail) {
   $divDescriptionBody.appendChild($pSynopsis);
 
   const $pYear = document.createElement('p');
-  $pYear.textContent = `Year released: ${detail.year}`;
+  $pYear.textContent = `Release Year: ${detail.year}`;
   $divDescriptionBody.appendChild($pYear);
 
   const $pScore = document.createElement('p');
   $pScore.textContent = `Score: ${detail.score}/10`;
   $divDescriptionBody.appendChild($pScore);
 
-  // const $pGenre = document.createElement('p');
-  // $pGenre.textContent = detail.genres;
-  // $divDescriptionBody.appendChild($pGenre);
+  const $pGenre = document.createElement('p');
+  $pGenre.textContent = `Genre: ${detail.genres}`;
+  $divDescriptionBody.appendChild($pGenre);
 
   const $divWatchlistContainer = document.createElement('div');
   $divWatchlistContainer.setAttribute('class', 'add-watchlist-container');
@@ -215,12 +228,17 @@ function renderDetails(detail) {
   $a.textContent = 'Add to watchlist';
   $divWatchlistContainer.appendChild($a);
 
-  if (detail.titleEng !== null) {
-    $h4.textContent = detail.titleEng;
-    $img.setAttribute('alt', detail.titleEng);
-  } else {
+  if (detail.titleEng === null) {
     $h4.textContent = detail.titleJap;
     $img.setAttribute('alt', detail.titleJap);
+  }
+
+  if (detail.year === null) {
+    $pYear.textContent = 'Year Released: year not available';
+  }
+
+  if (detail.score === null) {
+    $pScore.textContent = 'Score: score not available';
   }
 
   // trailer section
@@ -242,11 +260,18 @@ function renderDetails(detail) {
   $divTrailer.setAttribute('class', 'column-full trailer-video');
   $trailerDiv.appendChild($divTrailer);
 
-  const $iframe = document.createElement('iframe');
-  $iframe.setAttribute('width', '470');
-  $iframe.setAttribute('height', '315');
-  $iframe.setAttribute('src', detail.trailerURL);
-  $divTrailer.appendChild($iframe);
+  if (detail.trailerURL === null) {
+    const $p = document.createElement('p');
+    $p.setAttribute('class', 'trailer-title');
+    $p.textContent = 'Trailer not available.';
+    $divFull.appendChild($p);
+  } else {
+    const $iframe = document.createElement('iframe');
+    $iframe.setAttribute('width', '800');
+    $iframe.setAttribute('height', '450');
+    $iframe.setAttribute('src', detail.trailerURL);
+    $divTrailer.appendChild($iframe);
+  }
 
   return $div;
 }
@@ -262,19 +287,18 @@ function renderEntry(entry) {
   const $img = document.createElement('img');
   $img.setAttribute('src', entry.imgURL);
   $img.setAttribute('clicked-anime-id', entry.animeId);
+  $img.setAttribute('alt', entry.titleEng);
   $a.appendChild($img);
 
   const $p = document.createElement('p');
   $p.setAttribute('class', 'title');
+  $p.textContent = entry.titleEng;
+  $li.appendChild($p);
 
-  if (entry.titleEng !== null) {
-    $p.textContent = entry.titleEng;
-    $img.setAttribute('alt', entry.titleEng);
-  } else {
+  if (entry.titleEng === null) {
     $p.textContent = entry.titleJap;
     $img.setAttribute('alt', entry.titleJap);
   }
-  $li.appendChild($p);
 
   return $li;
 }
