@@ -1,10 +1,12 @@
 /* exported data */
 let data = {
   view: 'home',
+  searchResults: [],
   topAnimes: [],
   watchlist: [],
-  selected: null,
-  nextEntryId: 1
+  topUpcoming: [],
+  details: [],
+  selected: null
 };
 
 window.addEventListener('beforeunload', handleUnload);
