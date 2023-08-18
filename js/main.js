@@ -103,9 +103,7 @@ $ulTopAnime.addEventListener('click', topAnimeDetails);
 const $detailsView = document.querySelector('.details');
 
 function topAnimeDetails(event) {
-  if ($detailsView.childNodes.length > 5) {
-    $detailsView.removeChild($detailsView.childNodes[5]);
-  }
+  clearDetails();
   for (let i = 0; i < data.topAnimes.length; i++) {
     if (Number(event.target.getAttribute('clicked-anime-id')) === data.topAnimes[i].animeId) {
       const renderedDetails = renderDetails(data.topAnimes[i]);
@@ -117,9 +115,30 @@ function topAnimeDetails(event) {
   viewSwap('details');
 }
 
+function clearDetails() {
+  if ($detailsView.childNodes.length > 5) {
+    $detailsView.removeChild($detailsView.childNodes[5]);
+  }
+}
+
 function loadDetails() {
   const renderedDetails = renderDetails(data.details[0]);
   $detailsView.appendChild(renderedDetails);
+}
+
+$ulTopUpcoming.addEventListener('click', topUpcomingDetails);
+
+function topUpcomingDetails(event) {
+  clearDetails();
+  for (let i = 0; i < data.topUpcoming.length; i++) {
+    if (Number(event.target.getAttribute('clicked-anime-id')) === data.topUpcoming[i].animeId) {
+      const renderedDetails = renderDetails(data.topUpcoming[i]);
+      $detailsView.appendChild(renderedDetails);
+      data.details = [];
+      data.details.push(data.topUpcoming[i]);
+    }
+  }
+  viewSwap('details');
 }
 
 function renderDetails(detail) {
