@@ -120,6 +120,10 @@ li {
   font-size: smaller;
 }
 
+a {
+  text-decoration: none;
+}
+
 .no-entries {
   text-align: center;
 }

@@ -156,8 +156,8 @@ function searchDetails(event) {
 }
 
 function clearDetails() {
-  if ($detailsView.childNodes.length > 5) {
-    $detailsView.removeChild($detailsView.childNodes[5]);
+  if ($detailsView.childNodes.length > 3) {
+    $detailsView.removeChild($detailsView.childNodes[3]);
   }
 }
 
@@ -290,8 +290,9 @@ function renderEntry(entry) {
 
   const $p = document.createElement('p');
   $p.setAttribute('class', 'title');
+  $p.setAttribute('clicked-anime-id', entry.animeId);
   $p.textContent = entry.titleEng;
-  $li.appendChild($p);
+  $a.appendChild($p);
 
   if (entry.titleEng === null) {
     $p.textContent = entry.titleJap;
