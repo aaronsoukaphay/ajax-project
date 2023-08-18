@@ -5,6 +5,7 @@ let data = {
   topAnimes: [],
   watchlist: [],
   topUpcoming: [],
+  details: [],
   selected: null
 };
 

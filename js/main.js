@@ -22,6 +22,7 @@ function searchFor(event) {
   xhr.open('GET', url);
   xhr.responseType = 'json';
   data.searchResults = [];
+  clearSearch();
   xhr.addEventListener('load', () => {
     for (let i = 0; i < xhr.response.data.length; i++) {
       const animeInfo = {
@@ -41,7 +42,6 @@ function searchFor(event) {
     toggleNoEntries();
   });
   xhr.send();
-  clearSearch();
   viewSwap('search-results');
 }
 
@@ -103,26 +103,36 @@ $ulTopAnime.addEventListener('click', topAnimeDetails);
 const $detailsView = document.querySelector('.details');
 
 function topAnimeDetails(event) {
+  if ($detailsView.childNodes.length > 5) {
+    $detailsView.removeChild($detailsView.childNodes[5]);
+  }
   for (let i = 0; i < data.topAnimes.length; i++) {
     if (Number(event.target.getAttribute('clicked-anime-id')) === data.topAnimes[i].animeId) {
-      // console.log(data.topAnimes[i]);
       const renderedDetails = renderDetails(data.topAnimes[i]);
-      const renderedTrailer = renderTrailerDetails(data.topAnimes[i]);
       $detailsView.appendChild(renderedDetails);
-      $detailsView.appendChild(renderedTrailer);
-
+      data.details = [];
+      data.details.push(data.topAnimes[i]);
     }
   }
   viewSwap('details');
 }
 
+function loadDetails() {
+  const renderedDetails = renderDetails(data.details[0]);
+  $detailsView.appendChild(renderedDetails);
+}
+
 function renderDetails(detail) {
   const $div = document.createElement('div');
-  $div.setAttribute('class', 'row');
+  $div.setAttribute('id', 'details');
+
+  const $detailsDiv = document.createElement('div');
+  $detailsDiv.setAttribute('class', 'row');
+  $div.appendChild($detailsDiv);
 
   const $divPosterContainer = document.createElement('div');
   $divPosterContainer.setAttribute('class', 'column-half poster-container');
-  $div.appendChild($divPosterContainer);
+  $detailsDiv.appendChild($divPosterContainer);
 
   const $img = document.createElement('img');
   $img.setAttribute('src', detail.imgURL);
@@ -130,7 +140,7 @@ function renderDetails(detail) {
 
   const $divDescriptionBox = document.createElement('div');
   $divDescriptionBox.setAttribute('class', 'column-half description-box');
-  $div.appendChild($divDescriptionBox);
+  $detailsDiv.appendChild($divDescriptionBox);
 
   const $divDescriptionTitleBox = document.createElement('div');
   $divDescriptionTitleBox.setAttribute('class', 'description-title-box');
@@ -179,27 +189,28 @@ function renderDetails(detail) {
     $img.setAttribute('alt', detail.titleJap);
   }
 
-  return $div;
-}
+  // trailer section
 
-function renderTrailerDetails(detail) {
-  const $div = document.createElement('div');
-  $div.setAttribute('class', 'row');
+  const $trailerDiv = document.createElement('div');
+  $trailerDiv.setAttribute('class', 'row');
+  $div.appendChild($trailerDiv);
 
   const $divFull = document.createElement('div');
   $divFull.setAttribute('class', 'column-full');
-  $div.appendChild($divFull);
+  $trailerDiv.appendChild($divFull);
 
-  const $h4 = document.createElement('h4');
-  $h4.setAttribute('class', 'trailer-title');
-  $h4.textContent = 'WATCH TRAILER';
-  $divFull.appendChild($h4);
+  const $h4Trailer = document.createElement('h4');
+  $h4Trailer.setAttribute('class', 'trailer-title');
+  $h4Trailer.textContent = 'WATCH TRAILER';
+  $divFull.appendChild($h4Trailer);
 
   const $divTrailer = document.createElement('div');
   $divTrailer.setAttribute('class', 'column-full trailer-video');
-  $div.appendChild($divTrailer);
+  $trailerDiv.appendChild($divTrailer);
 
   const $iframe = document.createElement('iframe');
+  $iframe.setAttribute('width', '470');
+  $iframe.setAttribute('height', '315');
   $iframe.setAttribute('src', detail.trailerURL);
   $divTrailer.appendChild($iframe);
 
@@ -246,6 +257,10 @@ function handleDOMContentLoaded(event) {
   } else if (data.view === 'search-results') {
     window.addEventListener('load', topAnimes);
     window.addEventListener('load', topUpcoming);
+  } else if (data.view === 'details') {
+    window.addEventListener('load', topAnimes);
+    window.addEventListener('load', topUpcoming);
+    loadDetails();
   }
   toggleNoEntries();
   viewSwap(data.view);
