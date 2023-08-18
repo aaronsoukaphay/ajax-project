@@ -115,17 +115,6 @@ function topAnimeDetails(event) {
   viewSwap('details');
 }
 
-function clearDetails() {
-  if ($detailsView.childNodes.length > 5) {
-    $detailsView.removeChild($detailsView.childNodes[5]);
-  }
-}
-
-function loadDetails() {
-  const renderedDetails = renderDetails(data.details[0]);
-  $detailsView.appendChild(renderedDetails);
-}
-
 $ulTopUpcoming.addEventListener('click', topUpcomingDetails);
 
 function topUpcomingDetails(event) {
@@ -139,6 +128,32 @@ function topUpcomingDetails(event) {
     }
   }
   viewSwap('details');
+}
+
+$ulSearch.addEventListener('click', searchDetails);
+
+function searchDetails(event) {
+  clearDetails();
+  for (let i = 0; i < data.searchResults.length; i++) {
+    if (Number(event.target.getAttribute('clicked-anime-id')) === data.searchResults[i].animeId) {
+      const renderedDetails = renderDetails(data.searchResults[i]);
+      $detailsView.appendChild(renderedDetails);
+      data.details = [];
+      data.details.push(data.searchResults[i]);
+    }
+  }
+  viewSwap('details');
+}
+
+function clearDetails() {
+  if ($detailsView.childNodes.length > 5) {
+    $detailsView.removeChild($detailsView.childNodes[5]);
+  }
+}
+
+function loadDetails() {
+  const renderedDetails = renderDetails(data.details[0]);
+  $detailsView.appendChild(renderedDetails);
 }
 
 function renderDetails(detail) {
