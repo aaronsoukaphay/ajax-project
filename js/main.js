@@ -186,8 +186,17 @@ function renderTrailerDetails(detail) {
   const $div = document.createElement('div');
   $div.setAttribute('class', 'row');
 
+  const $divFull = document.createElement('div');
+  $divFull.setAttribute('class', 'column-full');
+  $div.appendChild($divFull);
+
+  const $h4 = document.createElement('h4');
+  $h4.setAttribute('class', 'trailer-title');
+  $h4.textContent = 'WATCH TRAILER';
+  $divFull.appendChild($h4);
+
   const $divTrailer = document.createElement('div');
-  $div.setAttribute('class', 'column-full trailer-video');
+  $divTrailer.setAttribute('class', 'column-full trailer-video');
   $div.appendChild($divTrailer);
 
   const $iframe = document.createElement('iframe');
