@@ -306,16 +306,16 @@ document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
 function handleDOMContentLoaded(event) {
   if (data.view === 'home') {
     topUpcoming();
-    window.addEventListener('load', topAnimes);
+    topAnimes();
   } else if (data.view === 'top-animes') {
     topAnimes();
-    window.addEventListener('load', topUpcoming);
+    topUpcoming();
   } else if (data.view === 'search-results') {
-    window.addEventListener('load', topAnimes);
-    window.addEventListener('load', topUpcoming);
+    topAnimes();
+    topUpcoming();
   } else if (data.view === 'details') {
-    window.addEventListener('load', topAnimes);
-    window.addEventListener('load', topUpcoming);
+    topAnimes();
+    topUpcoming();
     loadDetails();
   }
   toggleNoEntries();
