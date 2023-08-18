@@ -56,7 +56,6 @@ function topAnimes(event) {
   xhr.responseType = 'json';
   data.topAnimes = [];
   xhr.addEventListener('load', () => {
-    // console.log(xhr.response);
     for (let i = 0; i < xhr.response.data.length; i++) {
       const animeInfo = {
         animeId: xhr.response.data[i].mal_id,
@@ -87,7 +86,6 @@ function topUpcoming(event) {
   xhr.responseType = 'json';
   data.topUpcoming = [];
   xhr.addEventListener('load', () => {
-    // console.log(xhr.response);
     for (let i = 0; i < xhr.response.data.length; i++) {
       const animeInfo = {
         animeId: xhr.response.data[i].mal_id,
