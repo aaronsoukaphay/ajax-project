@@ -120,6 +120,7 @@ function topAnimeDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topAnimes[i]);
+      watchlistEntry();
     }
   }
   viewSwap('details');
@@ -164,6 +165,27 @@ function clearDetails() {
 function loadDetails() {
   const renderedDetails = renderDetails(data.details[0]);
   $detailsView.appendChild(renderedDetails);
+}
+
+const $ulWatchlist = document.querySelector('#ul-watchlist');
+
+function watchlistEntry() {
+  const $addToWatchListBtn = document.querySelector('#add-watchlist-button');
+  $addToWatchListBtn.addEventListener('click', renderWatchlist);
+}
+
+function renderWatchlist() {
+  data.watchlist.push(data.details[0]);
+  const renderedWatchlist = renderEntry(data.details[0]);
+  $ulWatchlist.appendChild(renderedWatchlist);
+  viewSwap('watchlist');
+}
+
+function loadWatchlist() {
+  for (let i = 0; i < data.watchlist.length; i++) {
+    const renderedWatchlist = renderEntry(data.watchlist[i]);
+    $ulWatchlist.appendChild(renderedWatchlist);
+  }
 }
 
 function renderDetails(detail) {
@@ -308,16 +330,24 @@ function handleDOMContentLoaded(event) {
   if (data.view === 'home') {
     topUpcoming();
     topAnimes();
+    loadWatchlist();
   } else if (data.view === 'top-animes') {
     topAnimes();
     topUpcoming();
+    loadWatchlist();
   } else if (data.view === 'search-results') {
     topAnimes();
     topUpcoming();
+    loadWatchlist();
   } else if (data.view === 'details') {
     topAnimes();
     topUpcoming();
     loadDetails();
+    loadWatchlist();
+  } else if (data.view === 'watchlist') {
+    topAnimes();
+    topUpcoming();
+    loadWatchlist();
   }
   toggleNoEntries();
   viewSwap(data.view);
