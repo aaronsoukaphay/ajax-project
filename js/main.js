@@ -120,6 +120,7 @@ function topAnimeDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topAnimes[i]);
+      watchlistEntry();
     }
   }
   viewSwap('details');
@@ -135,6 +136,7 @@ function topUpcomingDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topUpcoming[i]);
+      watchlistEntry();
     }
   }
   viewSwap('details');
@@ -150,20 +152,53 @@ function searchDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.searchResults[i]);
+      watchlistEntry();
     }
   }
   viewSwap('details');
 }
 
 function clearDetails() {
-  if ($detailsView.childNodes.length > 5) {
-    $detailsView.removeChild($detailsView.childNodes[5]);
+  if ($detailsView.childNodes.length > 3) {
+    $detailsView.removeChild($detailsView.childNodes[3]);
   }
 }
 
 function loadDetails() {
   const renderedDetails = renderDetails(data.details[0]);
   $detailsView.appendChild(renderedDetails);
+}
+
+const $ulWatchlist = document.querySelector('#ul-watchlist');
+
+function watchlistEntry() {
+  const $addToWatchListBtn = document.querySelector('#add-watchlist-button');
+  $addToWatchListBtn.addEventListener('click', renderWatchlist);
+}
+
+function renderWatchlist() {
+  data.watchlist.push(data.details[0]);
+  const renderedWatchlist = renderEntry(data.details[0]);
+  $ulWatchlist.appendChild(renderedWatchlist);
+  toggleNoWatchlistEntries();
+  viewSwap('watchlist');
+}
+
+function loadWatchlist() {
+  for (let i = 0; i < data.watchlist.length; i++) {
+    const renderedWatchlist = renderEntry(data.watchlist[i]);
+    $ulWatchlist.appendChild(renderedWatchlist);
+  }
+}
+
+const $noEntriesWatchlist = document.querySelector('.no-entries-watchlist');
+
+function toggleNoWatchlistEntries() {
+  if ($ulWatchlist.childNodes.length > 0) {
+    $noEntriesWatchlist.className = 'no-entries-watchlist hidden';
+  } else {
+    $noEntriesWatchlist.className = 'no-entries-watchlist';
+  }
 }
 
 function renderDetails(detail) {
@@ -290,8 +325,9 @@ function renderEntry(entry) {
 
   const $p = document.createElement('p');
   $p.setAttribute('class', 'title');
+  $p.setAttribute('clicked-anime-id', entry.animeId);
   $p.textContent = entry.titleEng;
-  $li.appendChild($p);
+  $a.appendChild($p);
 
   if (entry.titleEng === null) {
     $p.textContent = entry.titleJap;
@@ -304,21 +340,35 @@ function renderEntry(entry) {
 document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
 
 function handleDOMContentLoaded(event) {
-  if (data.view === 'home') {
-    topUpcoming();
-    topAnimes();
-  } else if (data.view === 'top-animes') {
-    topAnimes();
-    topUpcoming();
-  } else if (data.view === 'search-results') {
-    topAnimes();
-    topUpcoming();
-  } else if (data.view === 'details') {
-    topAnimes();
-    topUpcoming();
-    loadDetails();
+  switch (data.view) {
+    case 'home':
+      topUpcoming();
+      topAnimes();
+      loadWatchlist();
+      break;
+    case 'top-animes':
+      topAnimes();
+      topUpcoming();
+      loadWatchlist();
+      break;
+    case 'search-results':
+      topAnimes();
+      topUpcoming();
+      loadWatchlist();
+      break;
+    case 'details':
+      topAnimes();
+      topUpcoming();
+      loadDetails();
+      loadWatchlist();
+      break;
+    case 'watchlist':
+      topAnimes();
+      topUpcoming();
+      loadWatchlist();
   }
   toggleNoEntries();
+  toggleNoWatchlistEntries();
   viewSwap(data.view);
 }
 

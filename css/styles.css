@@ -120,6 +120,10 @@ li {
   font-size: smaller;
 }
 
+a {
+  text-decoration: none;
+}
+
 .no-entries {
   text-align: center;
 }
@@ -174,4 +178,10 @@ li {
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+}
+
+/* watchlist */
+
+.no-entries-watchlist {
+  text-align: center;
 }
