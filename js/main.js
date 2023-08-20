@@ -340,27 +340,32 @@ function renderEntry(entry) {
 document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
 
 function handleDOMContentLoaded(event) {
-  if (data.view === 'home') {
-    topUpcoming();
-    topAnimes();
-    loadWatchlist();
-  } else if (data.view === 'top-animes') {
-    topAnimes();
-    topUpcoming();
-    loadWatchlist();
-  } else if (data.view === 'search-results') {
-    topAnimes();
-    topUpcoming();
-    loadWatchlist();
-  } else if (data.view === 'details') {
-    topAnimes();
-    topUpcoming();
-    loadDetails();
-    loadWatchlist();
-  } else if (data.view === 'watchlist') {
-    topAnimes();
-    topUpcoming();
-    loadWatchlist();
+  switch (data.view) {
+    case 'home':
+      topUpcoming();
+      topAnimes();
+      loadWatchlist();
+      break;
+    case 'top-animes':
+      topAnimes();
+      topUpcoming();
+      loadWatchlist();
+      break;
+    case 'search-results':
+      topAnimes();
+      topUpcoming();
+      loadWatchlist();
+      break;
+    case 'details':
+      topAnimes();
+      topUpcoming();
+      loadDetails();
+      loadWatchlist();
+      break;
+    case 'watchlist':
+      topAnimes();
+      topUpcoming();
+      loadWatchlist();
   }
   toggleNoEntries();
   toggleNoWatchlistEntries();
