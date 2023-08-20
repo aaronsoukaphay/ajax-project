@@ -179,3 +179,9 @@ a {
   justify-content: center;
   margin-bottom: 2rem;
 }
+
+/* watchlist */
+
+.no-entries-watchlist {
+  text-align: center;
+}

@@ -187,17 +187,15 @@ function loadWatchlist() {
     const renderedWatchlist = renderEntry(data.watchlist[i]);
     $ulWatchlist.appendChild(renderedWatchlist);
   }
-  toggleNoWatchlistEntries();
 }
 
-const $watchlistView = document.querySelector('.watchlist');
+const $noEntriesWatchlist = document.querySelector('.no-entries-watchlist');
 
 function toggleNoWatchlistEntries() {
-  if (data.watchlist.length === 0) {
-    const $p = document.createElement('p');
-    $p.setAttribute('class', 'no-entries');
-    $p.textContent = 'Add your favorite anime here!';
-    $watchlistView.appendChild($p);
+  if ($ulWatchlist.childNodes.length > 0) {
+    $noEntriesWatchlist.className = 'no-entries-watchlist hidden';
+  } else {
+    $noEntriesWatchlist.className = 'no-entries-watchlist';
   }
 }
 
@@ -363,6 +361,7 @@ function handleDOMContentLoaded(event) {
     loadWatchlist();
   }
   toggleNoEntries();
+  toggleNoWatchlistEntries();
   viewSwap(data.view);
 }
 
