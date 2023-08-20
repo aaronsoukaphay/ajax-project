@@ -136,6 +136,7 @@ function topUpcomingDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topUpcoming[i]);
+      watchlistEntry();
     }
   }
   viewSwap('details');
@@ -151,6 +152,7 @@ function searchDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.searchResults[i]);
+      watchlistEntry();
     }
   }
   viewSwap('details');
