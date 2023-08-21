@@ -172,7 +172,7 @@ function loadDetails() {
 const $ulWatchlist = document.querySelector('#ul-watchlist');
 
 function watchlistEntry() {
-  const $addToWatchListBtn = document.querySelector('#add-watchlist-button');
+  const $addToWatchListBtn = document.querySelector('.add-watchlist-button');
   $addToWatchListBtn.addEventListener('click', renderWatchlist);
 }
 
@@ -185,11 +185,56 @@ function renderWatchlist() {
 }
 
 function loadWatchlist() {
+  // data.watchlist = [];
   for (let i = 0; i < data.watchlist.length; i++) {
     const renderedWatchlist = renderEntry(data.watchlist[i]);
     $ulWatchlist.appendChild(renderedWatchlist);
   }
 }
+
+$ulWatchlist.addEventListener('click', watchlistDetails);
+
+function watchlistDetails(event) {
+  // debugger;
+  clearDetails();
+  for (let i = 0; i < data.watchlist.length; i++) {
+    if (Number(event.target.getAttribute('clicked-anime-id')) === data.watchlist[i].animeId) {
+      const renderedDetails = renderDetails(data.watchlist[i]);
+      $detailsView.appendChild(renderedDetails);
+      loadWatchlistDetils();
+      // const $detailsTitle = document.querySelector('#details-title');
+      // $detailsTitle.textContent = 'Edit Watchlist';
+      // const $addToWatchListBtn = document.querySelector('.add-watchlist-button');
+      // $addToWatchListBtn.className = 'add-watchlist-button hidden';
+      // const $removeWatchlistBtn = document.querySelector('.remove-watchlist-button');
+      // $removeWatchlistBtn.className = 'remove-watchlist-button';
+      data.details = [];
+      data.details.push(data.watchlist[i]);
+    }
+  }
+  viewSwap('details');
+}
+
+function loadWatchlistDetils() {
+  const $detailsTitle = document.querySelector('#details-title');
+  $detailsTitle.textContent = 'Edit Watchlist';
+  const $addToWatchListBtn = document.querySelector('.add-watchlist-button');
+  $addToWatchListBtn.className = 'add-watchlist-button hidden';
+  const $removeWatchlistBtn = document.querySelector('.remove-watchlist-button');
+  $removeWatchlistBtn.className = 'remove-watchlist-button';
+  // $removeWatchlistBtn.addEventListener('click', removeFromWatchlist);
+}
+
+// function removeFromWatchlist(event) {
+//   console.log('removed button clicked');
+//   const childrenUlwatchlist = $ulWatchlist.childNodes;
+//   console.log(childrenUlwatchlist);
+//   for (let i = 0; i < data.watchlist.length; i++) {
+//     if (Number(event.target.getAttribute('clicked-anime-id')) === data.watchlist[i].animeId) {
+//       childrenUlwatchlist.closest
+//     }
+//   }
+// }
 
 const $noEntriesWatchlist = document.querySelector('.no-entries-watchlist');
 
@@ -256,10 +301,17 @@ function renderDetails(detail) {
   $divDescriptionBox.appendChild($divWatchlistContainer);
 
   const $a = document.createElement('a');
-  $a.setAttribute('id', 'add-watchlist-button');
+  $a.setAttribute('class', 'add-watchlist-button');
   $a.setAttribute('href', '#');
   $a.textContent = 'Add to watchlist';
   $divWatchlistContainer.appendChild($a);
+
+  const $aRemove = document.createElement('a');
+  $aRemove.setAttribute('class', 'remove-watchlist-button hidden');
+  $aRemove.setAttribute('href', '#');
+  $aRemove.setAttribute('clicked-anime-id', detail.animeId);
+  $aRemove.textContent = 'Remove from watchlist';
+  $divWatchlistContainer.appendChild($aRemove);
 
   if (detail.titleEng === null) {
     $h4.textContent = detail.titleJap;

@@ -163,7 +163,7 @@ a {
   justify-content: flex-end;
 }
 
-#add-watchlist-button {
+.add-watchlist-button {
   text-decoration: none;
   padding: 1rem;
   cursor: pointer;
@@ -184,4 +184,52 @@ a {
 
 .no-entries-watchlist {
   text-align: center;
+}
+
+.remove-watchlist-button {
+  text-decoration: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: red;
+}
+
+/* modal */
+
+.modal-container {
+  background-color: rgb(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-dialog,
+.modal-dialog p {
+  background-color: white;
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  color: black;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+}
+
+#cancel {
+  color: black;
+  background-color: rgb(182, 182, 182);
+  font-size: 1rem;
+}
+
+#confirm {
+  color: white;
+  background-color: red;
+  font-size: 1rem;
 }

@@ -6,7 +6,7 @@ let data = {
   watchlist: [],
   topUpcoming: [],
   details: [],
-  selected: null
+  editing: null
 };
 
 window.addEventListener('beforeunload', handleUnload);
