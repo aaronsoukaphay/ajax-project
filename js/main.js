@@ -120,7 +120,7 @@ function topAnimeDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topAnimes[i]);
-      watchlistEntry();
+      addToWatchlist();
     }
   }
   viewSwap('details');
@@ -136,7 +136,7 @@ function topUpcomingDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topUpcoming[i]);
-      watchlistEntry();
+      addToWatchlist();
     }
   }
   viewSwap('details');
@@ -152,7 +152,7 @@ function searchDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.searchResults[i]);
-      watchlistEntry();
+      addToWatchlist();
     }
   }
   viewSwap('details');
@@ -171,7 +171,7 @@ function loadDetails() {
 
 const $ulWatchlist = document.querySelector('#ul-watchlist');
 
-function watchlistEntry() {
+function addToWatchlist() {
   const $addToWatchListBtn = document.querySelector('.add-watchlist-button');
   $addToWatchListBtn.addEventListener('click', renderWatchlist);
 }
@@ -195,46 +195,60 @@ function loadWatchlist() {
 $ulWatchlist.addEventListener('click', watchlistDetails);
 
 function watchlistDetails(event) {
-  // debugger;
   clearDetails();
   for (let i = 0; i < data.watchlist.length; i++) {
     if (Number(event.target.getAttribute('clicked-anime-id')) === data.watchlist[i].animeId) {
       const renderedDetails = renderDetails(data.watchlist[i]);
       $detailsView.appendChild(renderedDetails);
-      loadWatchlistDetils();
-      // const $detailsTitle = document.querySelector('#details-title');
-      // $detailsTitle.textContent = 'Edit Watchlist';
-      // const $addToWatchListBtn = document.querySelector('.add-watchlist-button');
-      // $addToWatchListBtn.className = 'add-watchlist-button hidden';
-      // const $removeWatchlistBtn = document.querySelector('.remove-watchlist-button');
-      // $removeWatchlistBtn.className = 'remove-watchlist-button';
+      editWatchlist();
       data.details = [];
       data.details.push(data.watchlist[i]);
+      data.editing = data.watchlist[i];
     }
   }
   viewSwap('details');
 }
 
-function loadWatchlistDetils() {
+function editWatchlist() {
   const $detailsTitle = document.querySelector('#details-title');
   $detailsTitle.textContent = 'Edit Watchlist';
   const $addToWatchListBtn = document.querySelector('.add-watchlist-button');
   $addToWatchListBtn.className = 'add-watchlist-button hidden';
   const $removeWatchlistBtn = document.querySelector('.remove-watchlist-button');
   $removeWatchlistBtn.className = 'remove-watchlist-button';
-  // $removeWatchlistBtn.addEventListener('click', removeFromWatchlist);
+  $removeWatchlistBtn.addEventListener('click', removeFromWatchlist);
 }
 
-// function removeFromWatchlist(event) {
-//   console.log('removed button clicked');
-//   const childrenUlwatchlist = $ulWatchlist.childNodes;
-//   console.log(childrenUlwatchlist);
-//   for (let i = 0; i < data.watchlist.length; i++) {
-//     if (Number(event.target.getAttribute('clicked-anime-id')) === data.watchlist[i].animeId) {
-//       childrenUlwatchlist.closest
-//     }
-//   }
-// }
+const $modalContainer = document.querySelector('.modal-container');
+
+function removeFromWatchlist() {
+  $modalContainer.className = 'modal-container';
+}
+
+const $cancelBtn = document.querySelector('#cancel');
+$cancelBtn.addEventListener('click', handleCancel);
+
+function handleCancel(event) {
+  $modalContainer.className = 'modal-container hidden';
+}
+
+const $confirmBtn = document.querySelector('#confirm');
+$confirmBtn.addEventListener('click', handleConfirm);
+const childrenUlWatchlist = $ulWatchlist.childNodes;
+
+function handleConfirm(event) {
+  // debugger;
+  for (let i = 0; i < data.watchlist.length; i++) {
+    if (Number(data.editing.animeId) === data.watchlist[i].animeId) {
+      data.watchlist.splice(i, 1);
+      childrenUlWatchlist[i].remove();
+    }
+  }
+  toggleNoWatchlistEntries();
+  $modalContainer.className = 'moda-container hidden';
+  data.editing = null;
+  viewSwap('watchlist');
+}
 
 const $noEntriesWatchlist = document.querySelector('.no-entries-watchlist');
 
