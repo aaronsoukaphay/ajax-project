@@ -162,6 +162,8 @@ function clearDetails() {
   if ($detailsView.childNodes.length > 3) {
     $detailsView.removeChild($detailsView.childNodes[3]);
   }
+  const $detailsTitle = document.querySelector('#details-title');
+  $detailsTitle.textContent = 'Details';
 }
 
 function loadDetails() {
