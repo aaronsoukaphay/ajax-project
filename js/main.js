@@ -237,7 +237,6 @@ $confirmBtn.addEventListener('click', handleConfirm);
 const childrenUlWatchlist = $ulWatchlist.childNodes;
 
 function handleConfirm(event) {
-  // debugger;
   for (let i = 0; i < data.watchlist.length; i++) {
     if (Number(data.editing.animeId) === data.watchlist[i].animeId) {
       data.watchlist.splice(i, 1);
