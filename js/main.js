@@ -177,11 +177,25 @@ function addToWatchlist() {
 }
 
 function renderWatchlist() {
-  data.watchlist.push(data.details[0]);
-  const renderedWatchlist = renderEntry(data.details[0]);
-  $ulWatchlist.appendChild(renderedWatchlist);
-  toggleNoWatchlistEntries();
-  viewSwap('watchlist');
+  if (data.watchlist.length === 0) {
+    data.watchlist.push(data.details[0]);
+    const renderedWatchlist = renderEntry(data.details[0]);
+    $ulWatchlist.appendChild(renderedWatchlist);
+    toggleNoWatchlistEntries();
+    viewSwap('watchlist');
+  } else {
+    for (let i = 0; i < data.watchlist.length; i++) {
+      if (data.watchlist[i].animeId === Number(event.target.getAttribute('clicked-anime-id'))) {
+        alert('This entry is already in your watchlist.');
+        return;
+      }
+    }
+    data.watchlist.push(data.details[0]);
+    const renderedWatchlist = renderEntry(data.details[0]);
+    $ulWatchlist.appendChild(renderedWatchlist);
+    toggleNoWatchlistEntries();
+    viewSwap('watchlist');
+  }
 }
 
 function loadWatchlist() {
@@ -316,6 +330,7 @@ function renderDetails(detail) {
   const $a = document.createElement('a');
   $a.setAttribute('class', 'add-watchlist-button');
   $a.setAttribute('href', '#');
+  $a.setAttribute('clicked-anime-id', detail.animeId);
   $a.textContent = 'Add to watchlist';
   $divWatchlistContainer.appendChild($a);
 
