@@ -6,6 +6,7 @@ let data = {
   watchlist: [],
   topUpcoming: [],
   details: [],
+  editWatchlist: [],
   editing: null
 };
 
