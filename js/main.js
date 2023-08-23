@@ -551,7 +551,7 @@ function toggleNoEntries() {
 let counter = 0;
 const $imgList = document.querySelectorAll('.carousel');
 
-const bannerID = setInterval(nextImg, 3500);
+setInterval(nextImg, 3500);
 
 function nextImg() {
   if (counter < 5) {
@@ -565,6 +565,5 @@ function nextImg() {
     counter++;
   } else {
     counter = 0;
-    clearInterval(bannerID);
   }
 }

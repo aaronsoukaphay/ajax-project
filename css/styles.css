@@ -62,6 +62,7 @@ header {
 
 .search-button {
   background-color: #dc2626;
+  border-color: #dc2626;
   cursor: pointer;
 }
 
@@ -217,6 +218,7 @@ a {
 
 .modal-dialog p {
   color: black;
+  text-align: center;
 }
 
 .modal-buttons {
@@ -229,10 +231,18 @@ a {
   color: black;
   background-color: rgb(182, 182, 182);
   font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.75rem;
 }
 
 #confirm {
   color: white;
   background-color: red;
   font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.75rem;
 }
