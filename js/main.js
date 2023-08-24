@@ -203,7 +203,6 @@ function renderWatchlist() {
 }
 
 function loadWatchlist() {
-  // data.watchlist = [];
   for (let i = 0; i < data.watchlist.length; i++) {
     const renderedWatchlist = renderEntry(data.watchlist[i]);
     $ulWatchlist.appendChild(renderedWatchlist);
