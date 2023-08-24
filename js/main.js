@@ -120,10 +120,10 @@ function topAnimeDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topAnimes[i]);
-      watchlistEntry();
+      addToWatchlist();
+      viewSwap('details');
     }
   }
-  viewSwap('details');
 }
 
 $ulTopUpcoming.addEventListener('click', topUpcomingDetails);
@@ -136,10 +136,10 @@ function topUpcomingDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.topUpcoming[i]);
-      watchlistEntry();
+      addToWatchlist();
+      viewSwap('details');
     }
   }
-  viewSwap('details');
 }
 
 $ulSearch.addEventListener('click', searchDetails);
@@ -152,15 +152,19 @@ function searchDetails(event) {
       $detailsView.appendChild(renderedDetails);
       data.details = [];
       data.details.push(data.searchResults[i]);
-      watchlistEntry();
+      addToWatchlist();
+      viewSwap('details');
     }
   }
-  viewSwap('details');
 }
+
+const $editWatchlistView = document.querySelector('.edit-watchlist');
 
 function clearDetails() {
   if ($detailsView.childNodes.length > 3) {
     $detailsView.removeChild($detailsView.childNodes[3]);
+  } else if ($editWatchlist.childNodes.length > 3) {
+    $editWatchlistView.removeChild($editWatchlistView.childNodes[3]);
   }
 }
 
@@ -171,17 +175,31 @@ function loadDetails() {
 
 const $ulWatchlist = document.querySelector('#ul-watchlist');
 
-function watchlistEntry() {
-  const $addToWatchListBtn = document.querySelector('#add-watchlist-button');
+function addToWatchlist() {
+  const $addToWatchListBtn = document.querySelector('.add-watchlist-button');
   $addToWatchListBtn.addEventListener('click', renderWatchlist);
 }
 
 function renderWatchlist() {
-  data.watchlist.push(data.details[0]);
-  const renderedWatchlist = renderEntry(data.details[0]);
-  $ulWatchlist.appendChild(renderedWatchlist);
-  toggleNoWatchlistEntries();
-  viewSwap('watchlist');
+  if (data.watchlist.length === 0) {
+    data.watchlist.push(data.details[0]);
+    const renderedWatchlist = renderEntry(data.details[0]);
+    $ulWatchlist.appendChild(renderedWatchlist);
+    toggleNoWatchlistEntries();
+    viewSwap('watchlist');
+  } else {
+    for (let i = 0; i < data.watchlist.length; i++) {
+      if (data.watchlist[i].animeId === Number(event.target.getAttribute('clicked-anime-id'))) {
+        alert('This entry is already in your watchlist.');
+        return;
+      }
+    }
+    data.watchlist.push(data.details[0]);
+    const renderedWatchlist = renderEntry(data.details[0]);
+    $ulWatchlist.appendChild(renderedWatchlist);
+    toggleNoWatchlistEntries();
+    viewSwap('watchlist');
+  }
 }
 
 function loadWatchlist() {
@@ -189,6 +207,57 @@ function loadWatchlist() {
     const renderedWatchlist = renderEntry(data.watchlist[i]);
     $ulWatchlist.appendChild(renderedWatchlist);
   }
+}
+
+$ulWatchlist.addEventListener('click', watchlistDetails);
+
+function watchlistDetails(event) {
+  clearDetails();
+  for (let i = 0; i < data.watchlist.length; i++) {
+    if (Number(event.target.getAttribute('clicked-anime-id')) === data.watchlist[i].animeId) {
+      const renderedDetails = renderDetails(data.watchlist[i]);
+      $editWatchlist.appendChild(renderedDetails);
+      data.editWatchlist = [];
+      data.editWatchlist.push(data.watchlist[i]);
+      data.editing = data.watchlist[i];
+      viewSwap('edit-watchlist');
+    }
+  }
+}
+
+function loadWatchlistDetails() {
+  const renderedWatchlistDetails = renderDetails(data.editWatchlist[0]);
+  $editWatchlist.appendChild(renderedWatchlistDetails);
+}
+
+const $modalContainer = document.querySelector('.modal-container');
+
+function removeFromWatchlist() {
+  $modalContainer.className = 'modal-container';
+}
+
+const $cancelBtn = document.querySelector('#cancel');
+$cancelBtn.addEventListener('click', handleCancel);
+
+function handleCancel(event) {
+  $modalContainer.className = 'modal-container hidden';
+}
+
+const $confirmBtn = document.querySelector('#confirm');
+$confirmBtn.addEventListener('click', handleConfirm);
+const childrenUlWatchlist = $ulWatchlist.childNodes;
+
+function handleConfirm(event) {
+  for (let i = 0; i < data.watchlist.length; i++) {
+    if (Number(data.editing.animeId) === data.watchlist[i].animeId) {
+      data.watchlist.splice(i, 1);
+      childrenUlWatchlist[i].remove();
+    }
+  }
+  toggleNoWatchlistEntries();
+  $modalContainer.className = 'moda-container hidden';
+  data.editing = null;
+  viewSwap('watchlist');
 }
 
 const $noEntriesWatchlist = document.querySelector('.no-entries-watchlist');
@@ -256,10 +325,27 @@ function renderDetails(detail) {
   $divDescriptionBox.appendChild($divWatchlistContainer);
 
   const $a = document.createElement('a');
-  $a.setAttribute('id', 'add-watchlist-button');
+  $a.setAttribute('class', 'add-watchlist-button');
   $a.setAttribute('href', '#');
+  $a.setAttribute('clicked-anime-id', detail.animeId);
   $a.textContent = 'Add to watchlist';
   $divWatchlistContainer.appendChild($a);
+
+  const $aRemove = document.createElement('a');
+  $aRemove.setAttribute('class', 'remove-watchlist-button hidden');
+  $aRemove.setAttribute('href', '#');
+  $aRemove.setAttribute('clicked-anime-id', detail.animeId);
+  $aRemove.textContent = 'Remove from watchlist';
+  $aRemove.addEventListener('click', removeFromWatchlist);
+  $divWatchlistContainer.appendChild($aRemove);
+
+  if (data.view === 'edit-watchlist' || data.view === 'watchlist') {
+    $aRemove.className = 'remove-watchlist-button';
+    $a.className = 'add-watchlist-button hidden';
+  } else {
+    $aRemove.className = 'remove-watchlist-button hidden';
+    $a.className = 'add-watchlist-button';
+  }
 
   if (detail.titleEng === null) {
     $h4.textContent = detail.titleJap;
@@ -366,6 +452,12 @@ function handleDOMContentLoaded(event) {
       topAnimes();
       topUpcoming();
       loadWatchlist();
+      break;
+    case 'edit-watchlist':
+      topAnimes();
+      topUpcoming();
+      loadWatchlist();
+      loadWatchlistDetails();
   }
   toggleNoEntries();
   toggleNoWatchlistEntries();
@@ -377,6 +469,7 @@ const $searchResults = document.querySelector('.search-results');
 const $details = document.querySelector('.details');
 const $watchlist = document.querySelector('.watchlist');
 const $topAnimes = document.querySelector('.top-animes');
+const $editWatchlist = document.querySelector('.edit-watchlist');
 
 function viewSwap(viewName) {
   if (viewName === 'search-results') {
@@ -385,30 +478,42 @@ function viewSwap(viewName) {
     $watchlist.className = 'watchlist hidden';
     $details.className = 'details hidden';
     $topAnimes.className = 'top-animes hidden';
+    $editWatchlist.className = 'edit-watchlist hidden';
   } else if (viewName === 'home') {
     $searchResults.className = 'search-results hidden';
     $home.className = 'home';
     $watchlist.className = 'watchlist hidden';
     $details.className = 'details hidden';
     $topAnimes.className = 'top-animes hidden';
+    $editWatchlist.className = 'edit-watchlist hidden';
   } else if (viewName === 'details') {
     $details.className = 'details';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
     $watchlist.className = 'watchlist hidden';
     $topAnimes.className = 'top-animes hidden';
+    $editWatchlist.className = 'edit-watchlist hidden';
   } else if (viewName === 'watchlist') {
     $details.className = 'details hidden';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
     $watchlist.className = 'watchlist';
     $topAnimes.className = 'top-animes hidden';
+    $editWatchlist.className = 'edit-watchlist hidden';
   } else if (viewName === 'top-animes') {
     $details.className = 'details hidden';
     $searchResults.className = 'search-results hidden';
     $home.className = 'home hidden';
     $watchlist.className = 'watchlist hidden';
     $topAnimes.className = 'top-animes';
+    $editWatchlist.className = 'edit-watchlist hidden';
+  } else if (viewName === 'edit-watchlist') {
+    $details.className = 'details hidden';
+    $searchResults.className = 'search-results hidden';
+    $home.className = 'home hidden';
+    $watchlist.className = 'watchlist hidden';
+    $topAnimes.className = 'top-animes hidden';
+    $editWatchlist.className = 'edit-watchlist';
   }
   data.view = viewName;
 }
@@ -445,7 +550,7 @@ function toggleNoEntries() {
 let counter = 0;
 const $imgList = document.querySelectorAll('.carousel');
 
-const bannerID = setInterval(nextImg, 3500);
+setInterval(nextImg, 3500);
 
 function nextImg() {
   if (counter < 5) {
@@ -459,6 +564,5 @@ function nextImg() {
     counter++;
   } else {
     counter = 0;
-    clearInterval(bannerID);
   }
 }
