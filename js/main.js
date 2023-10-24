@@ -388,7 +388,7 @@ function renderDetails(detail) {
     const $iframe = document.createElement('iframe');
     $iframe.setAttribute('width', '800');
     $iframe.setAttribute('height', '450');
-    $iframe.setAttribute('src', detail.trailerURL);
+    $iframe.setAttribute('src', detail.trailerURL + '?autoplay=0');
     $divTrailer.appendChild($iframe);
   }
 
@@ -472,49 +472,46 @@ const $topAnimes = document.querySelector('.top-animes');
 const $editWatchlist = document.querySelector('.edit-watchlist');
 
 function viewSwap(viewName) {
-  if (viewName === 'search-results') {
-    $home.className = 'home hidden';
-    $searchResults.className = 'search-results';
-    $watchlist.className = 'watchlist hidden';
-    $details.className = 'details hidden';
-    $topAnimes.className = 'top-animes hidden';
-    $editWatchlist.className = 'edit-watchlist hidden';
-  } else if (viewName === 'home') {
-    $searchResults.className = 'search-results hidden';
-    $home.className = 'home';
-    $watchlist.className = 'watchlist hidden';
-    $details.className = 'details hidden';
-    $topAnimes.className = 'top-animes hidden';
-    $editWatchlist.className = 'edit-watchlist hidden';
-  } else if (viewName === 'details') {
-    $details.className = 'details';
-    $searchResults.className = 'search-results hidden';
-    $home.className = 'home hidden';
-    $watchlist.className = 'watchlist hidden';
-    $topAnimes.className = 'top-animes hidden';
-    $editWatchlist.className = 'edit-watchlist hidden';
-  } else if (viewName === 'watchlist') {
-    $details.className = 'details hidden';
-    $searchResults.className = 'search-results hidden';
-    $home.className = 'home hidden';
-    $watchlist.className = 'watchlist';
-    $topAnimes.className = 'top-animes hidden';
-    $editWatchlist.className = 'edit-watchlist hidden';
-  } else if (viewName === 'top-animes') {
-    $details.className = 'details hidden';
-    $searchResults.className = 'search-results hidden';
-    $home.className = 'home hidden';
-    $watchlist.className = 'watchlist hidden';
-    $topAnimes.className = 'top-animes';
-    $editWatchlist.className = 'edit-watchlist hidden';
-  } else if (viewName === 'edit-watchlist') {
-    $details.className = 'details hidden';
-    $searchResults.className = 'search-results hidden';
-    $home.className = 'home hidden';
-    $watchlist.className = 'watchlist hidden';
-    $topAnimes.className = 'top-animes hidden';
-    $editWatchlist.className = 'edit-watchlist';
+  // Function to hide all views
+  function hideAllViews() {
+    $home.classList.add('hidden');
+    $searchResults.classList.add('hidden');
+    $watchlist.classList.add('hidden');
+    $topAnimes.classList.add('hidden');
+    $editWatchlist.classList.add('hidden');
+    $details.classList.add('hidden');
   }
+
+  // Function to show a specific view
+  function showView(view) {
+    view.classList.remove('hidden');
+  }
+
+  // Hide all views initially
+  hideAllViews();
+
+  // Show the specific view
+  if (viewName === 'search-results') {
+    showView($searchResults);
+  } else if (viewName === 'home') {
+    showView($home);
+  } else if (viewName === 'details') {
+    showView($details);
+  } else if (viewName === 'watchlist') {
+    showView($watchlist);
+  } else if (viewName === 'top-animes') {
+    showView($topAnimes);
+  } else if (viewName === 'edit-watchlist') {
+    showView($editWatchlist);
+  }
+
+  if (viewName !== 'details') {
+    $details.innerHTML = '';
+  }
+  if (viewName !== 'edit-watchlist') {
+    $editWatchlist.innerHTML = '';
+  }
+
   data.view = viewName;
 }
 
