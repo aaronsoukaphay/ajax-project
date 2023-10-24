@@ -45,8 +45,9 @@ header {
 
 #main-title {
   font-family: "Trade Winds", cursive;
-  font-size: 3.25rem;
+  font-size: 2.25rem;
   letter-spacing: 0.1rem;
+  text-align: center;
 }
 
 .search-bar-background {
